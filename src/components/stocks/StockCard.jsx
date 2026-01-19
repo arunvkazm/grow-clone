@@ -22,7 +22,7 @@ const StockCard = ({ stock }) => {
                 </span>
               </div>
               <div>
-                <h3 className="font-semibold text-gray-900">{stock.name}</h3>
+                <h3 className="font-semibold" style={{ color: '#04b488' }}>{stock.name}</h3>
                 <p className="text-sm text-gray-500">{stock.symbol} • {stock.sector}</p>
               </div>
             </div>

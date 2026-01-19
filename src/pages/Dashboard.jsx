@@ -87,7 +87,7 @@ const Dashboard = () => {
               <button className="p-2 text-gray-600 hover:text-gray-900 relative">
                 <FiBell className="h-5 w-5" />
                 <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-semibold px-1.5 py-0.5 rounded-full min-w-[20px] text-center">
-                  3/4
+                  4
                 </span>
               </button>
               
@@ -153,7 +153,7 @@ const Dashboard = () => {
                   { symbol: 'Reliance Industries', price: 1413.50, change: -44.40, changePercent: -3.06, isPositive: false },
                 ].map((stock, index) => (
                   <div key={index} className="border border-gray-200 rounded-lg p-4 hover:border-primary-300 transition-colors cursor-pointer">
-                    <p className="text-sm font-semibold text-gray-900 mb-2 truncate">{stock.symbol}</p>
+                    <p className="text-sm font-semibold mb-2 truncate" style={{ color: '#04b488' }}>{stock.symbol}</p>
                     <p className="text-lg font-bold text-gray-600 mb-1">₹{stock.price.toFixed(2)}</p>
                     <div className={`flex items-center space-x-1 text-sm font-medium ${stock.isPositive ? 'text-green-600' : 'text-red-600'}`}>
                       <span>{stock.isPositive ? '+' : ''}{stock.change.toFixed(2)} ({stock.isPositive ? '+' : ''}{stock.changePercent.toFixed(2)}%)</span>
@@ -179,7 +179,7 @@ const Dashboard = () => {
                   { symbol: 'SILVERBEES', price: 280.20, change: 10.76, changePercent: 3.99 },
                 ].map((stock, index) => (
                   <div key={index} className="border border-gray-200 rounded-lg p-4 hover:border-primary-300 transition-colors cursor-pointer">
-                    <p className="text-sm font-semibold text-gray-900 mb-2 truncate">{stock.symbol}</p>
+                    <p className="text-sm font-semibold mb-2 truncate" style={{ color: '#04b488' }}>{stock.symbol}</p>
                     <p className="text-lg font-bold text-gray-600 mb-1">₹{stock.price.toFixed(2)}</p>
                     <div className="flex items-center space-x-1 text-green-600 text-sm font-medium">
                       <span>+{stock.change.toFixed(2)} (+{stock.changePercent.toFixed(2)}%)</span>

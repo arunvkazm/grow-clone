@@ -32,7 +32,7 @@ const MostBoughtETFs = () => {
                 </div>
               )}
             </div>
-            <p className="text-sm font-semibold text-gray-600 mb-2 truncate">{etf.name}</p>
+            <p className="text-sm font-semibold mb-2 truncate" style={{ color: '#04b488' }}>{etf.name}</p>
             <p className="text-base font-semibold text-gray-600 mb-1">₹{etf.price.toFixed(2)}</p>
             <div className={`flex items-center space-x-1 text-sm font-medium ${etf.isPositive ? 'text-green-600' : 'text-red-600'}`}>
               <span>{etf.isPositive ? '+' : ''}{etf.change.toFixed(2)} ({etf.isPositive ? '+' : ''}{etf.changePercent.toFixed(2)}%)</span>

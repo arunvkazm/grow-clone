@@ -201,7 +201,7 @@ const Footer = () => {
         </div>
 
         {/* Market Data & Funds Section */}
-        <div className="mb-8 bg-white rounded-lg p-6">
+        <div className="mb-8 rounded-lg p-6">
           {/* Tabs */}
           <div className="flex flex-wrap gap-4 mb-4 border-b border-gray-200 pb-2">
             {marketTabs.map((tab) => (

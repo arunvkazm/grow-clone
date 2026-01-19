@@ -28,7 +28,7 @@ const TopGainers = () => {
               <span className="font-semibold">+{stock.changePercent.toFixed(2)}%</span>
             </div>
           </div>
-          <h3 className="font-semibold text-gray-900 mb-1">{stock.name}</h3>
+          <h3 className="font-semibold mb-1" style={{ color: '#04b488' }}>{stock.name}</h3>
           <p className="text-sm text-gray-500 mb-2">{stock.symbol}</p>
           <div className="flex justify-between items-center">
             <span className="text-lg font-bold text-gray-900">

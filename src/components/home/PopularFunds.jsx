@@ -29,7 +29,7 @@ const PopularFunds = () => {
         >
           <div className="mb-4">
             <div className="flex justify-between items-start mb-2">
-              <h3 className="font-semibold text-gray-900 line-clamp-2">{fund.name}</h3>
+              <h3 className="font-semibold line-clamp-2" style={{ color: '#04b488' }}>{fund.name}</h3>
               <span className={`text-xs px-2 py-1 rounded-full ${getRiskColor(fund.risk)}`}>
                 {fund.risk}
               </span>

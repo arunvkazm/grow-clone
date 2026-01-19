@@ -59,7 +59,7 @@ const StocksInNews = () => {
               <CompanyLogo companyName={item.stock} className="w-10 h-10" />
             </div>
             <div className="flex items-center space-x-2 mb-2">
-              <p className="text-sm font-semibold text-gray-600 flex-1 truncate">{item.stock}</p>
+              <p className="text-sm font-semibold flex-1 truncate" style={{ color: '#04b488' }}>{item.stock}</p>
               {item.isPositive !== null && (
                 <div className={`flex items-center space-x-1 ${item.isPositive ? 'text-green-600' : 'text-red-600'}`}>
                   <span className="text-xs font-medium">

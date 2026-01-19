@@ -1,97 +1,112 @@
 // src/components/dashboard/HoldingsTable.jsx
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { FiTrendingUp, FiTrendingDown } from 'react-icons/fi';
-import { portfolioData } from '../../data/portfolio';
+import { FiChevronDown } from 'react-icons/fi';
+import { LineChart, Line, ResponsiveContainer } from 'recharts';
 
 const HoldingsTable = () => {
-  const holdings = portfolioData.holdings;
-
-  const formatCurrency = (amount) => {
-    if (amount >= 10000000) {
-      // Show full number in Indian format for crores (15,00,00,000 Cr)
-      return `${amount.toLocaleString('en-IN')}`;
-    } else if (amount >= 100000) {
-      return `₹${(amount / 100000).toFixed(2)} L`;
-    }
-    return `₹${amount.toLocaleString('en-IN')}`;
+  // Sample data matching screenshot - Trident stock
+  const holding = {
+    name: 'Trident',
+    symbol: 'TRIDENT',
+    quantity: 3,
+    avgPrice: 35.30,
+    currentPrice: 25.17,
+    oneDayChange: -0.36,
+    oneDayChangePercent: -1.41,
+    returns: -30.39,
+    returnsPercent: -28.70,
+    currentValue: 75.51,
+    investedValue: 105.90
   };
+
+  // Generate sparkline data (downward trend)
+  const sparklineData = Array.from({ length: 20 }, (_, i) => ({
+    value: 30 - (i * 0.5) + Math.random() * 2
+  }));
 
   return (
     <div className="overflow-x-auto">
       <table className="w-full">
         <thead>
           <tr className="border-b border-gray-200">
-            <th className="text-left py-4 px-6 text-gray-600 font-medium">Asset</th>
-            <th className="text-right py-4 px-6 text-gray-600 font-medium">Quantity</th>
-            <th className="text-right py-4 px-6 text-gray-600 font-medium">Avg. Cost</th>
-            <th className="text-right py-4 px-6 text-gray-600 font-medium">Current Price</th>
-            <th className="text-right py-4 px-6 text-gray-600 font-medium">Invested</th>
-            <th className="text-right py-4 px-6 text-gray-600 font-medium">Current Value</th>
-            <th className="text-right py-4 px-6 text-gray-600 font-medium">P&L</th>
+            <th className="text-left py-3 px-4 text-xs font-medium text-gray-600">
+              <div className="flex items-center space-x-1">
+                <span>Company</span>
+                <FiChevronDown className="h-3 w-3" />
+              </div>
+            </th>
+            <th className="text-right py-3 px-4 text-xs font-medium text-gray-600">
+              <div className="flex items-center justify-end space-x-1">
+                <span>Market price (1D%)</span>
+                <FiChevronDown className="h-3 w-3" />
+              </div>
+            </th>
+            <th className="text-right py-3 px-4 text-xs font-medium text-gray-600">
+              <div className="flex items-center justify-end space-x-1">
+                <span>Returns (%)</span>
+                <FiChevronDown className="h-3 w-3" />
+              </div>
+            </th>
+            <th className="text-right py-3 px-4 text-xs font-medium text-gray-600">
+              <div className="flex items-center justify-end space-x-1">
+                <span>Current (Invested)</span>
+                <FiChevronDown className="h-3 w-3" />
+              </div>
+            </th>
           </tr>
         </thead>
         <tbody>
-          {holdings.map((holding) => {
-            const isPositive = holding.pnl >= 0;
-            const pnlPercentage = ((holding.currentValue - holding.invested) / holding.invested * 100).toFixed(2);
-            
-            return (
-              <tr key={holding.id} className="border-b border-gray-100 hover:bg-gray-50">
-                <td className="py-4 px-6">
-                  <Link to={`/${holding.type === 'stock' ? 'stocks' : 'mutual-funds'}/${holding.id}`}>
-                    <div className="flex items-center space-x-3">
-                      <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${
-                        holding.type === 'stock' ? 'bg-blue-100' : 'bg-purple-100'
-                      }`}>
-                        <span className={`font-bold ${
-                          holding.type === 'stock' ? 'text-blue-600' : 'text-purple-600'
-                        }`}>
-                          {holding.symbol.charAt(0)}
-                        </span>
-                      </div>
-                      <div>
-                        <div className="font-medium text-gray-900">{holding.name}</div>
-                        <div className="text-sm text-gray-500">
-                          {holding.symbol} • {holding.type === 'stock' ? 'Stock' : 'Mutual Fund'}
-                        </div>
-                      </div>
-                    </div>
-                  </Link>
-                </td>
-                <td className="py-4 px-6 text-right font-medium">
-                  {holding.quantity} {holding.type === 'stock' ? 'shares' : 'units'}
-                </td>
-                <td className="py-4 px-6 text-right text-gray-600">
-                  {formatCurrency(holding.avgCost)}
-                </td>
-                <td className="py-4 px-6 text-right font-medium text-gray-600">
-                  {formatCurrency(holding.currentPrice)}
-                </td>
-                <td className="py-4 px-6 text-right text-gray-600">
-                  {formatCurrency(holding.invested)}
-                </td>
-                <td className="py-4 px-6 text-right font-medium text-gray-600">
-                  {formatCurrency(holding.currentValue)}
-                </td>
-                <td className="py-4 px-6 text-right">
-                  <div className={`inline-flex items-center ${isPositive ? 'text-green-600' : 'text-red-600'}`}>
-                    {isPositive ? (
-                      <FiTrendingUp className="mr-1" />
-                    ) : (
-                      <FiTrendingDown className="mr-1" />
-                    )}
-                    <span className="font-semibold">
-                      {isPositive ? '+' : ''}{pnlPercentage}%
-                    </span>
-                    <span className="ml-2">
-                      ({isPositive ? '+' : ''}{formatCurrency(Math.abs(holding.pnl))})
-                    </span>
+          <tr className="border-b border-gray-100 hover:bg-gray-50">
+            <td className="py-4 px-4">
+              <div className="flex items-center space-x-3">
+                <div className="w-10 h-10 rounded-lg flex items-center justify-center bg-blue-100">
+                  <span className="font-bold text-blue-600">T</span>
+                </div>
+                <div className="flex-1">
+                  <div className="font-medium" style={{ color: '#04b488' }}>{holding.name}</div>
+                  <div className="text-xs text-gray-600">
+                    {holding.quantity} shares • Avg. ₹{holding.avgPrice.toFixed(2)}
                   </div>
-                </td>
-              </tr>
-            );
-          })}
+                </div>
+                <div className="w-16 h-8 flex-shrink-0">
+                  <ResponsiveContainer width="100%" height="100%">
+                    <LineChart data={sparklineData}>
+                      <Line 
+                        type="monotone" 
+                        dataKey="value" 
+                        stroke="#ef4444" 
+                        strokeWidth={2}
+                        dot={false}
+                      />
+                    </LineChart>
+                  </ResponsiveContainer>
+                </div>
+              </div>
+            </td>
+            <td className="py-4 px-4 text-right">
+              <div>
+                <p className="text-sm font-medium text-gray-900">₹{holding.currentPrice.toFixed(2)}</p>
+                <p className="text-xs text-red-600">
+                  {holding.oneDayChange >= 0 ? '+' : ''}{holding.oneDayChange.toFixed(2)} ({holding.oneDayChangePercent >= 0 ? '+' : ''}{holding.oneDayChangePercent.toFixed(2)}%)
+                </p>
+              </div>
+            </td>
+            <td className="py-4 px-4 text-right">
+              <div>
+                <p className="text-sm font-medium text-red-600">₹{holding.returns.toFixed(2)}</p>
+                <p className="text-xs text-red-600">
+                  {holding.returnsPercent >= 0 ? '+' : ''}{holding.returnsPercent.toFixed(2)}%
+                </p>
+              </div>
+            </td>
+            <td className="py-4 px-4 text-right">
+              <div>
+                <p className="text-sm font-medium text-gray-900">₹{holding.currentValue.toFixed(2)}</p>
+                <p className="text-xs text-gray-600">₹{holding.investedValue.toFixed(2)}</p>
+              </div>
+            </td>
+          </tr>
         </tbody>
       </table>
     </div>

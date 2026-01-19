@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { FiBarChart2, FiSearch, FiBell, FiChevronDown } from 'react-icons/fi';
+import { FiBarChart2, FiSearch, FiBell, FiChevronDown, FiEye, FiMoreVertical, FiChevronUp } from 'react-icons/fi';
 import MarketIndices from '../components/dashboard/MarketIndices';
 import HoldingsTable from '../components/dashboard/HoldingsTable';
 import DashboardSidebar from '../components/dashboard/DashboardSidebar';
@@ -15,7 +15,16 @@ const Holdings = () => {
   const location = useLocation();
   const [searchQuery, setSearchQuery] = useState('');
   const [showMoreMenu, setShowMoreMenu] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(true);
   const isActive = location.pathname === '/holdings';
+  
+  // Calculate summary values (using first holding as example - Trident)
+  const currentValue = 75.51;
+  const investedValue = 105.90;
+  const oneDayReturns = -1.08;
+  const oneDayReturnsPercent = -1.41;
+  const totalReturns = -30.39;
+  const totalReturnsPercent = -28.70;
 
   return (
     <div className="min-h-screen bg-white">
@@ -67,7 +76,7 @@ const Holdings = () => {
               <button className="p-2 text-gray-600 hover:text-gray-900 relative">
                 <FiBell className="h-5 w-5" />
                 <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-semibold px-1.5 py-0.5 rounded-full min-w-[20px] text-center">
-                  3/4
+                  4
                 </span>
               </button>
               
@@ -112,13 +121,65 @@ const Holdings = () => {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
           <div className="lg:col-span-3">
-            <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
-              <div className="px-6 py-4 border-b border-gray-200">
-                <h2 className="text-xl font-bold text-gray-900">Your Holdings</h2>
-                <p className="text-sm text-gray-600 mt-1">
-                  Total Value: {portfolioData.currentValue.toLocaleString('en-IN')} Cr
-                </p>
+            {/* Holdings Summary Section */}
+            <div className="bg-white rounded-lg border border-gray-200 mb-4">
+              <div className="px-4 py-3 border-b border-gray-200 flex items-center justify-between">
+                <div className="flex items-center space-x-3">
+                  <button
+                    onClick={() => setIsExpanded(!isExpanded)}
+                    className="flex items-center space-x-2"
+                  >
+                    <span className="text-sm font-medium text-gray-900">Holdings (1)</span>
+                    {isExpanded ? (
+                      <FiChevronUp className="h-4 w-4 text-gray-600" />
+                    ) : (
+                      <FiChevronDown className="h-4 w-4 text-gray-600" />
+                    )}
+                  </button>
+                  <button className="p-1 hover:bg-gray-100 rounded">
+                    <FiEye className="h-4 w-4 text-gray-600" />
+                  </button>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <button className="px-3 py-1.5 text-sm font-medium text-gray-700 hover:bg-gray-100 rounded">
+                    Analyse
+                  </button>
+                  <button className="p-1 hover:bg-gray-100 rounded">
+                    <FiMoreVertical className="h-4 w-4 text-gray-600" />
+                  </button>
+                </div>
               </div>
+              
+              {isExpanded && (
+                <div className="px-4 py-4">
+                  <div className="grid grid-cols-4 gap-4">
+                    <div>
+                      <p className="text-xs text-gray-600 mb-1">Current value</p>
+                      <p className="text-sm font-semibold text-gray-900">₹{currentValue.toFixed(2)}</p>
+                    </div>
+                    <div>
+                      <p className="text-xs text-gray-600 mb-1">Invested value</p>
+                      <p className="text-sm font-semibold text-gray-900">₹{investedValue.toFixed(2)}</p>
+                    </div>
+                    <div>
+                      <p className="text-xs text-gray-600 mb-1">1D returns</p>
+                      <p className="text-sm font-semibold text-red-600">
+                        ₹{oneDayReturns.toFixed(2)} ({oneDayReturnsPercent.toFixed(2)}%)
+                      </p>
+                    </div>
+                    <div>
+                      <p className="text-xs text-gray-600 mb-1">Total returns</p>
+                      <p className="text-sm font-semibold text-red-600">
+                        ₹{totalReturns.toFixed(2)} ({totalReturnsPercent.toFixed(2)}%)
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Holdings Table */}
+            <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
               <HoldingsTable />
             </div>
           </div>

@@ -47,7 +47,7 @@ const Navbar = () => {
 
           {/* Desktop Navigation - Groww Style */}
           <div className="hidden md:flex items-center space-x-6 flex-1 max-w-2xl mx-6">
-            <Link to="/stocks" className="text-gray-700 hover:text-gray-900 font-medium transition-colors py-2">
+            <Link to="/explore" className="text-gray-700 hover:text-gray-900 font-medium transition-colors py-2">
               Stocks
             </Link>
             <Link to="/futures-and-options" className="text-gray-700 hover:text-gray-900 font-medium transition-colors py-2">
@@ -128,7 +128,7 @@ const Navbar = () => {
         {isMenuOpen && (
           <div className="md:hidden py-4 border-t border-gray-200">
             <div className="flex flex-col space-y-4">
-              <Link to="/stocks" className="text-gray-700 hover:text-primary-600 font-medium px-3 py-2" onClick={() => setIsMenuOpen(false)}>
+              <Link to="/explore" className="text-gray-700 hover:text-primary-600 font-medium px-3 py-2" onClick={() => setIsMenuOpen(false)}>
                 Stocks
               </Link>
               <Link to="/futures-and-options" className="text-gray-700 hover:text-primary-600 font-medium px-3 py-2" onClick={() => setIsMenuOpen(false)}>

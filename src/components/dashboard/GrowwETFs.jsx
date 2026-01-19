@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { FiTrendingUp } from 'react-icons/fi';
+import GrowwLogo from '../common/GrowwLogo';
 
 const GrowwETFs = () => {
   const etfs = [
@@ -22,11 +23,9 @@ const GrowwETFs = () => {
         {etfs.map((etf, index) => (
           <div key={index} className="border border-gray-200 rounded-lg p-4 hover:border-primary-300 transition-colors cursor-pointer">
             <div className="mb-3">
-              <div className={`${etf.logoBg} w-10 h-10 rounded-lg flex items-center justify-center`}>
-                <span className={`text-sm font-bold ${etf.logoColor}`}>{etf.logo}</span>
-              </div>
+              <GrowwLogo size="md" showText={false} />
             </div>
-            <p className="text-sm font-semibold text-gray-600 mb-2 truncate">{etf.name}</p>
+            <p className="text-sm font-semibold mb-2 truncate" style={{ color: '#04b488' }}>{etf.name}</p>
             {etf.isNFO ? (
               <div>
                 <span className="text-xs bg-primary-100 text-primary-700 px-2 py-1 rounded font-medium">NFO</span>

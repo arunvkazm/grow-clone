@@ -37,7 +37,7 @@ const MutualFundCard = ({ fund }) => {
                 </span>
               </div>
               <div>
-                <h3 className="font-semibold text-gray-900 line-clamp-1">{fund.name}</h3>
+                <h3 className="font-semibold line-clamp-1" style={{ color: '#04b488' }}>{fund.name}</h3>
                 <p className="text-sm text-gray-500">{fund.category} Fund</p>
               </div>
             </div>

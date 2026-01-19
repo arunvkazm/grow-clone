@@ -259,7 +259,7 @@ const TopMarketMovers = () => {
               <div className="col-span-5 flex items-center space-x-3">
                 <CompanyLogo companyName={stock.name} className="w-10 h-10 flex-shrink-0" />
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-semibold text-gray-600 truncate">{stock.name}</p>
+                  <p className="text-sm font-semibold truncate" style={{ color: '#04b488' }}>{stock.name}</p>
                 </div>
                 {/* Sparkline */}
                 <div className="w-16 h-8 flex-shrink-0">
