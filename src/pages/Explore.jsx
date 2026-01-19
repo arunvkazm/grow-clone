@@ -76,7 +76,9 @@ const Explore = () => {
               
               <button className="p-2 text-gray-600 hover:text-gray-900 relative">
                 <FiBell className="h-5 w-5" />
-                <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
+                <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-semibold px-1.5 py-0.5 rounded-full min-w-[20px] text-center">
+                  3/4
+                </span>
               </button>
               
               <ProfileDropdown />
@@ -86,7 +88,7 @@ const Explore = () => {
           {/* Secondary Nav Links */}
           <div className="h-12 flex items-center justify-between border-t border-gray-100">
             <div className="flex items-center space-x-6">
-              <Link to="/explore" className="text-sm font-medium text-primary-600 border-b-2 border-primary-500 pb-3">
+              <Link to="/explore" className="text-sm font-medium text-gray-900 border-b-2 border-gray-900 pb-3">
                 Explore
               </Link>
               <Link to="/holdings" className="text-sm font-medium text-gray-700 hover:text-gray-900">
@@ -129,7 +131,7 @@ const Explore = () => {
             {/* Most Traded Stocks in MTF */}
             <div>
               <div className="flex items-center justify-between mb-4">
-                <h2 className="text-lg font-bold text-gray-900">Most traded stocks in MTF</h2>
+                <h2 className="text-lg font-bold" style={{ color: '#44475b' }}>Most traded stocks in MTF</h2>
                 <Link to="/mtf" className="text-primary-500 hover:text-primary-600 text-sm font-medium">
                   See more &gt;
                 </Link>
@@ -164,7 +166,7 @@ const Explore = () => {
             {/* Top Intraday Stocks */}
             <div>
               <div className="flex items-center justify-between mb-4">
-                <h2 className="text-lg font-bold text-gray-900">Top intraday stocks</h2>
+                <h2 className="text-lg font-bold" style={{ color: '#44475b' }}>Top intraday stocks</h2>
                 <Link to="/intraday-screener" className="text-primary-500 hover:text-primary-600 text-sm font-medium">
                   Intraday screener &gt;
                 </Link>

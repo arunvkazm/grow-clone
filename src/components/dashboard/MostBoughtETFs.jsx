@@ -13,7 +13,7 @@ const MostBoughtETFs = () => {
   return (
     <div>
       <div className="flex items-center justify-between mb-4">
-        <h2 className="text-lg font-bold text-gray-900">Most bought ETFs</h2>
+        <h2 className="text-lg font-bold" style={{ color: '#44475b' }}>Most bought ETFs</h2>
         <Link to="/etfs" className="text-primary-500 hover:text-primary-600 text-sm font-medium">
           See all ETFs &gt;
         </Link>

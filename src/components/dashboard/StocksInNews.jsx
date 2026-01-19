@@ -46,7 +46,7 @@ const StocksInNews = () => {
   return (
     <div>
       <div className="flex items-center justify-between mb-4">
-        <h2 className="text-lg font-bold text-gray-900">Stocks in news today</h2>
+        <h2 className="text-lg font-bold" style={{ color: '#44475b' }}>Stocks in news today</h2>
         <Link to="/news" className="text-primary-500 hover:text-primary-600 text-sm font-medium">
           See more news &gt;
         </Link>

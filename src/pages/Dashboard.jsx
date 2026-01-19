@@ -86,7 +86,9 @@ const Dashboard = () => {
               
               <button className="p-2 text-gray-600 hover:text-gray-900 relative">
                 <FiBell className="h-5 w-5" />
-                <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
+                <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-semibold px-1.5 py-0.5 rounded-full min-w-[20px] text-center">
+                  3/4
+                </span>
               </button>
               
               <div className="w-8 h-8 bg-primary-500 rounded-full flex items-center justify-center cursor-pointer">
@@ -138,7 +140,7 @@ const Dashboard = () => {
             {/* Most Traded Stocks in MTF */}
             <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
               <div className="flex items-center justify-between mb-4">
-                <h2 className="text-lg font-bold text-gray-900">Most traded stocks in MTF</h2>
+                <h2 className="text-lg font-bold" style={{ color: '#44475b' }}>Most traded stocks in MTF</h2>
                 <Link to="/mtf" className="text-primary-500 hover:text-primary-600 text-sm font-medium">
                   See more &gt;
                 </Link>
@@ -164,7 +166,7 @@ const Dashboard = () => {
             {/* Top Intraday Stocks */}
             <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
               <div className="flex items-center justify-between mb-4">
-                <h2 className="text-lg font-bold text-gray-900">Top intraday stocks</h2>
+                <h2 className="text-lg font-bold" style={{ color: '#44475b' }}>Top intraday stocks</h2>
                 <Link to="/intraday-screener" className="text-primary-500 hover:text-primary-600 text-sm font-medium">
                   Intraday screener &gt;
                 </Link>

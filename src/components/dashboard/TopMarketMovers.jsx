@@ -208,7 +208,7 @@ const TopMarketMovers = () => {
     <div>
       <div className="flex items-center justify-between mb-4">
         <div className="flex items-center space-x-4">
-          <h2 className="text-lg font-bold text-gray-900">Top market movers</h2>
+          <h2 className="text-lg font-bold" style={{ color: '#44475b' }}>Top market movers</h2>
           <select
             value={selectedIndex}
             onChange={(e) => setSelectedIndex(e.target.value)}
@@ -224,15 +224,15 @@ const TopMarketMovers = () => {
         </Link>
       </div>
       
-      <div className="flex space-x-1 mb-4 border-b border-gray-200">
+      <div className="flex space-x-2 mb-4">
         {tabs.map((tab) => (
           <button
             key={tab}
             onClick={() => setActiveTab(tab)}
-            className={`px-4 py-2 text-sm font-medium transition-colors ${
+            className={`px-4 py-1.5 text-sm font-medium transition-colors rounded-full ${
               activeTab === tab
-                ? 'text-gray-900 bg-gray-100 border-b-2 border-gray-900'
-                : 'text-gray-600 hover:text-gray-900'
+                ? 'text-gray-900 bg-gray-200 border border-gray-900'
+                : 'text-gray-600 bg-gray-100 hover:bg-gray-200 hover:text-gray-900'
             }`}
           >
             {tab}

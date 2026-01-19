@@ -50,7 +50,7 @@ const SectorsTrending = () => {
   return (
     <div>
       <div className="flex items-center justify-between mb-4">
-        <h2 className="text-lg font-bold text-gray-900">Sectors trending today</h2>
+        <h2 className="text-lg font-bold" style={{ color: '#44475b' }}>Sectors trending today</h2>
         <Link to="/sectors" className="text-primary-500 hover:text-primary-600 text-sm font-medium">
           See all sectors &gt;
         </Link>

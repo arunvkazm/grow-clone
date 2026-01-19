@@ -89,7 +89,7 @@ const ProfileDropdown = () => {
       </button>
 
       {isOpen && (
-        <div className="absolute right-0 mt-2 w-72 bg-white rounded-lg shadow-xl border border-gray-200 z-50">
+        <div className="absolute right-0 mt-2 w-100 bg-white rounded-lg shadow-xl border border-gray-200 z-50">
           {/* User Info Section */}
           <div className="px-4 py-3 border-b border-gray-200 flex items-start justify-between">
             <div className="flex-1 min-w-0">
@@ -102,27 +102,30 @@ const ProfileDropdown = () => {
           </div>
 
           {/* Menu Items */}
-          <div className="py-2">
+          <div className="p-3">
             {menuItems.map((item, index) => {
               const Icon = item.icon;
+              const isLast = index === menuItems.length - 1;
               return (
-                <button
-                  key={index}
-                  onClick={() => {
-                    item.onClick();
-                    setIsOpen(false);
-                  }}
-                  className="w-full px-4 py-3 flex items-center hover:bg-gray-50 transition-colors text-left"
-                >
-                  <Icon className="h-5 w-5 text-gray-600 flex-shrink-0 mr-3" />
-                  <div className="flex-1 min-w-0">
-                    {item.balance && (
-                      <p className="text-xs text-gray-500 mb-0.5 leading-tight">{item.balance}</p>
-                    )}
-                    <p className="text-sm font-medium text-gray-900 leading-tight">{item.label}</p>
-                  </div>
-                  <FiChevronRight className="h-4 w-4 text-gray-400 flex-shrink-0 ml-auto" />
-                </button>
+                <React.Fragment key={index}>
+                  <button
+                    onClick={() => {
+                      item.onClick();
+                      setIsOpen(false);
+                    }}
+                    className="w-full px-4 py-3 flex items-center hover:bg-gray-50 transition-colors text-left"
+                  >
+                    <Icon className="h-5 w-5 text-gray-600 flex-shrink-0 mr-3" />
+                    <div className="flex-1 min-w-0">
+                      {item.balance && (
+                        <p className="text-xs text-gray-500 mb-0.5 leading-tight">{item.balance}</p>
+                      )}
+                      <p className="text-sm font-medium text-gray-900 leading-tight">{item.label}</p>
+                    </div>
+                    <FiChevronRight className="h-4 w-4 text-gray-400 flex-shrink-0 ml-auto" />
+                  </button>
+                  {!isLast && <hr className="my-2 border-gray-200" />}
+                </React.Fragment>
               );
             })}
           </div>

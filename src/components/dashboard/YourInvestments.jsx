@@ -19,7 +19,7 @@ const YourInvestments = () => {
   return (
     <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
       <div className="flex items-center justify-between mb-6">
-        <h2 className="text-lg font-bold text-gray-900">Your investments</h2>
+        <h2 className="text-lg font-bold" style={{ color: '#44475b' }}>Your investments</h2>
         <Link
           to="/holdings"
           className="text-primary-500 hover:text-primary-600 text-sm font-medium"

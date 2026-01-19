@@ -13,7 +13,7 @@ const GrowwETFs = () => {
   return (
     <div>
       <div className="flex items-center justify-between mb-4">
-        <h2 className="text-lg font-bold text-gray-900">ETFs by Groww</h2>
+        <h2 className="text-lg font-bold" style={{ color: '#44475b' }}>ETFs by Groww</h2>
         <Link to="/etfs/groww" className="text-primary-500 hover:text-primary-600 text-sm font-medium">
           See all ETFs &gt;
         </Link>

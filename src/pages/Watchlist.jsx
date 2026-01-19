@@ -101,7 +101,9 @@ const Watchlist = () => {
               
               <button className="p-2 text-gray-600 hover:text-gray-900 relative">
                 <FiBell className="h-5 w-5" />
-                <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
+                <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-semibold px-1.5 py-0.5 rounded-full min-w-[20px] text-center">
+                  3/4
+                </span>
               </button>
               
               <ProfileDropdown />
@@ -115,7 +117,7 @@ const Watchlist = () => {
               <Link to="/holdings" className="text-sm font-medium text-gray-700 hover:text-gray-900">Holdings</Link>
               <Link to="/positions" className="text-sm font-medium text-gray-700 hover:text-gray-900">Positions</Link>
               <Link to="/orders" className="text-sm font-medium text-gray-700 hover:text-gray-900">Orders</Link>
-              <Link to="/watchlist" className={`text-sm font-medium pb-3 ${isActive ? 'text-primary-600 border-b-2 border-primary-500' : 'text-gray-700 hover:text-gray-900'}`}>
+              <Link to="/watchlist" className={`text-sm font-medium pb-3 ${isActive ? 'text-gray-900 border-b-2 border-gray-900' : 'text-gray-700 hover:text-gray-900'}`}>
                 Watchlist
               </Link>
             </div>
