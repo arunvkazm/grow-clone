@@ -75,7 +75,7 @@ const StockDetail = () => {
             </div>
             
             <div className="mt-4 lg:mt-0 text-right">
-              <div className="text-4xl font-bold text-gray-900 mb-2">
+              <div className="text-4xl font-bold text-gray-600 mb-2">
                 ₹{stock.price.toLocaleString('en-IN')}
               </div>
               <div className={`inline-flex items-center text-lg ${isPositive ? 'text-green-600' : 'text-red-600'}`}>

@@ -32,7 +32,7 @@ const YourInvestments = () => {
         {/* Current Value */}
         <div className="flex items-center justify-between py-3">
           <p className="text-sm text-gray-600">Current</p>
-          <p className="text-2xl font-bold text-gray-900">{formatCurrency(currentValue)}</p>
+          <p className="text-2xl font-bold text-gray-600">{formatCurrency(currentValue)}</p>
         </div>
 
         {/* 1D Returns */}
@@ -54,7 +54,7 @@ const YourInvestments = () => {
         {/* Invested Amount */}
         <div className="flex items-center justify-between py-3 border-t border-gray-100">
           <p className="text-sm text-gray-600">Invested</p>
-          <p className="text-sm font-medium text-gray-900">{formatCurrency(totalInvestment)}</p>
+          <p className="text-sm font-medium text-gray-600">{formatCurrency(totalInvestment)}</p>
         </div>
       </div>
     </div>

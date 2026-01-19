@@ -76,7 +76,7 @@ const DashboardSidebar = () => {
             <div className="flex items-center justify-between mb-2">
               <p className="text-xs text-gray-600">Portfolio Value</p>
             </div>
-            <p className="text-2xl font-bold text-gray-900 mb-1">
+            <p className="text-2xl font-bold text-gray-600 mb-1">
             ₹{formatLargeCurrency(currentValue)}
             </p>
             <div className={`flex items-center space-x-1 ${totalGain >= 0 ? 'text-green-600' : 'text-red-600'}`}>
@@ -95,7 +95,7 @@ const DashboardSidebar = () => {
           <div className="pt-3 border-t border-gray-200">
             <div className="flex items-center justify-between mb-1">
               <p className="text-xs text-gray-600">Total Invested</p>
-              <p className="text-sm font-semibold text-gray-900">{formatLargeCurrency(totalInvestment)}</p>
+              <p className="text-sm font-semibold text-gray-600">{formatLargeCurrency(totalInvestment)}</p>
             </div>
           </div>
 

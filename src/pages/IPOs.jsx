@@ -88,7 +88,7 @@ const IPOs = () => {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-gray-500">Total Issue Size</p>
-                <p className="text-2xl font-bold text-gray-900">₹9,700 Cr</p>
+                <p className="text-2xl font-bold text-gray-600">₹9,700 Cr</p>
               </div>
               <div className="p-3 bg-purple-50 rounded-lg">
                 <FiDollarSign className="h-6 w-6 text-purple-500" />

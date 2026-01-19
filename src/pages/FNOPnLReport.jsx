@@ -202,35 +202,35 @@ const FNOPnLReport = () => {
           <div className="space-y-3">
             <div className="flex items-center justify-between py-2 border-b border-gray-100">
               <span className="text-sm text-gray-700">Exchange Transaction Charges</span>
-              <span className="text-sm font-semibold text-gray-900">{formatCurrency(charges.exchangeTransactionCharges)}</span>
+              <span className="text-sm font-semibold text-gray-600">{formatCurrency(charges.exchangeTransactionCharges)}</span>
             </div>
             <div className="flex items-center justify-between py-2 border-b border-gray-100">
               <span className="text-sm text-gray-700">SEBI Turnover Charges</span>
-              <span className="text-sm font-semibold text-gray-900">{formatCurrency(charges.sebiTurnoverCharges)}</span>
+              <span className="text-sm font-semibold text-gray-600">{formatCurrency(charges.sebiTurnoverCharges)}</span>
             </div>
             <div className="flex items-center justify-between py-2 border-b border-gray-100">
               <span className="text-sm text-gray-700">STT (Securities Transaction Tax)</span>
-              <span className="text-sm font-semibold text-gray-900">{formatCurrency(charges.stt)}</span>
+              <span className="text-sm font-semibold text-gray-600">{formatCurrency(charges.stt)}</span>
             </div>
             <div className="flex items-center justify-between py-2 border-b border-gray-100">
               <span className="text-sm text-gray-700">Stamp Duty</span>
-              <span className="text-sm font-semibold text-gray-900">{formatCurrency(charges.stampDuty)}</span>
+              <span className="text-sm font-semibold text-gray-600">{formatCurrency(charges.stampDuty)}</span>
             </div>
             <div className="flex items-center justify-between py-2 border-b border-gray-100">
               <span className="text-sm text-gray-700">IPFT Charges</span>
-              <span className="text-sm font-semibold text-gray-900">{formatCurrency(charges.ipftCharges)}</span>
+              <span className="text-sm font-semibold text-gray-600">{formatCurrency(charges.ipftCharges)}</span>
             </div>
             <div className="flex items-center justify-between py-2 border-b border-gray-100">
               <span className="text-sm text-gray-700">Brokerage</span>
-              <span className="text-sm font-semibold text-gray-900">{formatCurrency(charges.brokerage)}</span>
+              <span className="text-sm font-semibold text-gray-600">{formatCurrency(charges.brokerage)}</span>
             </div>
             <div className="flex items-center justify-between py-2 border-b border-gray-100">
               <span className="text-sm text-gray-700">Total GST</span>
-              <span className="text-sm font-semibold text-gray-900">{formatCurrency(charges.totalGST)}</span>
+              <span className="text-sm font-semibold text-gray-600">{formatCurrency(charges.totalGST)}</span>
             </div>
             <div className="flex items-center justify-between py-2 pt-3 border-t-2 border-gray-300">
               <span className="text-base font-bold text-gray-900">Total</span>
-              <span className="text-base font-bold text-gray-900">{formatCurrency(charges.total)}</span>
+              <span className="text-base font-bold text-gray-600">{formatCurrency(charges.total)}</span>
             </div>
           </div>
         </div>
@@ -272,11 +272,11 @@ const FNOPnLReport = () => {
                         <td className="py-3 px-4 text-sm text-gray-900">{trade.scripName}</td>
                         <td className="py-3 px-4 text-sm text-gray-900 text-right">{trade.quantity}</td>
                         <td className="py-3 px-4 text-sm text-gray-900">{formatDate(trade.buyDate)}</td>
-                        <td className="py-3 px-4 text-sm text-gray-900 text-right">{formatCurrency(trade.buyPrice)}</td>
-                        <td className="py-3 px-4 text-sm text-gray-900 text-right">{formatCurrency(trade.buyValue)}</td>
+                        <td className="py-3 px-4 text-sm text-gray-600 text-right">{formatCurrency(trade.buyPrice)}</td>
+                        <td className="py-3 px-4 text-sm text-gray-600 text-right">{formatCurrency(trade.buyValue)}</td>
                         <td className="py-3 px-4 text-sm text-gray-900">{formatDate(trade.sellDate)}</td>
-                        <td className="py-3 px-4 text-sm text-gray-900 text-right">{formatCurrency(trade.sellPrice)}</td>
-                        <td className="py-3 px-4 text-sm text-gray-900 text-right">{formatCurrency(trade.sellValue)}</td>
+                        <td className="py-3 px-4 text-sm text-gray-600 text-right">{formatCurrency(trade.sellPrice)}</td>
+                        <td className="py-3 px-4 text-sm text-gray-600 text-right">{formatCurrency(trade.sellValue)}</td>
                         <td className={`py-3 px-4 text-sm font-semibold text-right ${trade.realizedPnL >= 0 ? 'text-green-600' : 'text-red-600'}`}>
                           {formatCurrency(trade.realizedPnL)}
                         </td>
@@ -319,11 +319,11 @@ const FNOPnLReport = () => {
                         <td className="py-3 px-4 text-sm text-gray-900">{trade.scripName}</td>
                         <td className="py-3 px-4 text-sm text-gray-900 text-right">{trade.quantity}</td>
                         <td className="py-3 px-4 text-sm text-gray-900">{formatDate(trade.buyDate)}</td>
-                        <td className="py-3 px-4 text-sm text-gray-900 text-right">{formatCurrency(trade.buyPrice)}</td>
-                        <td className="py-3 px-4 text-sm text-gray-900 text-right">{formatCurrency(trade.buyValue)}</td>
+                        <td className="py-3 px-4 text-sm text-gray-600 text-right">{formatCurrency(trade.buyPrice)}</td>
+                        <td className="py-3 px-4 text-sm text-gray-600 text-right">{formatCurrency(trade.buyValue)}</td>
                         <td className="py-3 px-4 text-sm text-gray-900">{formatDate(trade.sellDate)}</td>
-                        <td className="py-3 px-4 text-sm text-gray-900 text-right">{formatCurrency(trade.sellPrice)}</td>
-                        <td className="py-3 px-4 text-sm text-gray-900 text-right">{formatCurrency(trade.sellValue)}</td>
+                        <td className="py-3 px-4 text-sm text-gray-600 text-right">{formatCurrency(trade.sellPrice)}</td>
+                        <td className="py-3 px-4 text-sm text-gray-600 text-right">{formatCurrency(trade.sellValue)}</td>
                         <td className={`py-3 px-4 text-sm font-semibold text-right ${trade.realizedPnL >= 0 ? 'text-green-600' : 'text-red-600'}`}>
                           {formatCurrency(trade.realizedPnL)}
                         </td>

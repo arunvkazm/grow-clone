@@ -278,10 +278,10 @@ const Orders = () => {
                       <div className="text-gray-900">{order.quantity}</div>
                     </div>
                     <div className="col-span-1 text-right">
-                      <div className="text-gray-900">₹{order.price.toFixed(2)}</div>
+                      <div className="text-gray-600">₹{order.price.toFixed(2)}</div>
                     </div>
                     <div className="col-span-1 text-right">
-                      <div className="font-semibold text-gray-900">₹{order.total.toLocaleString('en-IN', { maximumFractionDigits: 2 })}</div>
+                      <div className="font-semibold text-gray-600">₹{order.total.toLocaleString('en-IN', { maximumFractionDigits: 2 })}</div>
                     </div>
                     <div className="col-span-1 text-center">
                       <div className={`inline-flex items-center space-x-1 px-3 py-1 rounded-full text-sm font-medium ${getStatusColor(order.status)}`}>

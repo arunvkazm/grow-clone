@@ -235,7 +235,7 @@ const Balance = () => {
             <div className="bg-white border border-gray-200 rounded-lg p-6">
               <h2 className="text-sm font-medium text-gray-700 mb-4">Stocks, F&O balance</h2>
               <div className="mb-6">
-                <p className="text-3xl font-bold text-gray-900">₹{balance.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
+                <p className="text-3xl font-bold text-gray-600">₹{balance.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
               </div>
               
               <div className="space-y-0">
@@ -243,7 +243,7 @@ const Balance = () => {
                 <div className="flex items-center justify-between py-3 border-b border-gray-100">
                   <span className="text-sm text-gray-700">Cash</span>
                   <div className="flex items-center space-x-3">
-                    <span className="text-sm font-semibold text-gray-900">₹{cashBalance.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+                    <span className="text-sm font-semibold text-gray-600">₹{cashBalance.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
                     <button 
                       onClick={handleCashAdd}
                       className="px-4 py-1.5 text-sm font-medium text-primary-600 hover:text-primary-700 border border-primary-600 rounded-lg hover:bg-primary-50 transition-colors"

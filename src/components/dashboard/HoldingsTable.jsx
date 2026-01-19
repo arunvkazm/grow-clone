@@ -62,16 +62,16 @@ const HoldingsTable = () => {
                 <td className="py-4 px-6 text-right font-medium">
                   {holding.quantity} {holding.type === 'stock' ? 'shares' : 'units'}
                 </td>
-                <td className="py-4 px-6 text-right text-gray-700">
+                <td className="py-4 px-6 text-right text-gray-600">
                   {formatCurrency(holding.avgCost)}
                 </td>
-                <td className="py-4 px-6 text-right font-medium">
+                <td className="py-4 px-6 text-right font-medium text-gray-600">
                   {formatCurrency(holding.currentPrice)}
                 </td>
-                <td className="py-4 px-6 text-right text-gray-700">
+                <td className="py-4 px-6 text-right text-gray-600">
                   {formatCurrency(holding.invested)}
                 </td>
-                <td className="py-4 px-6 text-right font-medium">
+                <td className="py-4 px-6 text-right font-medium text-gray-600">
                   {formatCurrency(holding.currentValue)}
                 </td>
                 <td className="py-4 px-6 text-right">

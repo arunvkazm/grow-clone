@@ -205,7 +205,7 @@ const Watchlist = () => {
                                 </Link>
                               </div>
                               <div className="col-span-2 text-right">
-                                <div className="font-semibold text-gray-900">₹{stock.price.toFixed(2)}</div>
+                                <div className="font-semibold text-gray-600">₹{stock.price.toFixed(2)}</div>
                               </div>
                               <div className="col-span-2 text-right">
                                 <div className={`flex items-center justify-end space-x-1 ${
@@ -275,7 +275,7 @@ const Watchlist = () => {
                                 </Link>
                               </div>
                               <div className="col-span-2 text-right">
-                                <div className="font-semibold text-gray-900">₹{fund.nav.toFixed(2)}</div>
+                                <div className="font-semibold text-gray-600">₹{fund.nav.toFixed(2)}</div>
                               </div>
                               <div className="col-span-2 text-right">
                                 <div className={`flex items-center justify-end space-x-1 ${
