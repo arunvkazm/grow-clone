@@ -9,7 +9,7 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     // Check if user is logged in from localStorage
-    const storedUser = localStorage.getItem('groww_user');
+    const storedUser = localStorage.getItem('market_user');
     if (storedUser) {
       setUser(JSON.parse(storedUser));
     }
@@ -27,7 +27,7 @@ export const AuthProvider = ({ children }) => {
     };
     
     setUser(dummyUser);
-    localStorage.setItem('groww_user', JSON.stringify(dummyUser));
+    localStorage.setItem('market_user', JSON.stringify(dummyUser));
     return { success: true, user: dummyUser };
   };
 
@@ -42,13 +42,13 @@ export const AuthProvider = ({ children }) => {
     };
     
     setUser(newUser);
-    localStorage.setItem('groww_user', JSON.stringify(newUser));
+    localStorage.setItem('market_user', JSON.stringify(newUser));
     return { success: true, user: newUser };
   };
 
   const logout = () => {
     setUser(null);
-    localStorage.removeItem('groww_user');
+    localStorage.removeItem('market_user');
   };
 
   return (

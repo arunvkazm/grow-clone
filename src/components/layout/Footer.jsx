@@ -46,7 +46,7 @@ const Footer = () => {
           {/* Brand Section */}
           <div className="lg:col-span-2">
             <Link to="/" className="flex items-center space-x-2 mb-4">
-              <span className="text-2xl font-bold text-primary-400">Groww</span>
+              <span className="text-2xl font-bold text-primary-400">Market</span>
             </Link>
             <p className="text-gray-400 mb-6 max-w-md">
               India's fastest growing investment platform. Invest in stocks, mutual funds, and more with ₹0 brokerage.
@@ -92,7 +92,7 @@ const Footer = () => {
         <div className="flex flex-col md:flex-row justify-between items-center">
           <div className="mb-4 md:mb-0">
             <p className="text-gray-400 text-sm">
-              © {new Date().getFullYear()} Groww. All rights reserved.
+              © {new Date().getFullYear()} Market. All rights reserved.
             </p>
           </div>
           <div className="text-gray-400 text-sm">

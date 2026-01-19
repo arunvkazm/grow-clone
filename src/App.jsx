@@ -12,6 +12,10 @@ import MutualFundDetail from './pages/MutualFundDetail';
 import Dashboard from './pages/Dashboard';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
+import Watchlist from './pages/Watchlist';
+import Orders from './pages/Orders';
+import News from './pages/News';
+import IPOs from './pages/IPOs';
 import ProtectedRoute from './components/common/ProtectedRoute';
 import './styles/global.css';
 
@@ -32,6 +36,14 @@ function App() {
                 <Dashboard />
               </ProtectedRoute>
             } />
+            <Route path="/watchlist" element={<Watchlist />} />
+            <Route path="/orders" element={
+              <ProtectedRoute>
+                <Orders />
+              </ProtectedRoute>
+            } />
+            <Route path="/news" element={<News />} />
+            <Route path="/ipos" element={<IPOs />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
           </Routes>

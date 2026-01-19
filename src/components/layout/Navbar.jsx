@@ -29,6 +29,9 @@ const Navbar = () => {
   const navItems = [
     { name: 'Stocks', path: '/stocks' },
     { name: 'Mutual Funds', path: '/mutual-funds' },
+    { name: 'IPOs', path: '/ipos' },
+    { name: 'News', path: '/news' },
+    { name: 'Watchlist', path: '/watchlist' },
     { name: 'Dashboard', path: '/dashboard' },
   ];
 
@@ -40,7 +43,7 @@ const Navbar = () => {
           <div className="flex items-center">
             <Link to="/" className="flex items-center space-x-2">
               <FaChartLine className="h-8 w-8 text-primary-500" />
-              <span className="text-2xl font-bold text-gray-900">Groww</span>
+              <span className="text-2xl font-bold text-gray-900">Market</span>
             </Link>
           </div>
 
