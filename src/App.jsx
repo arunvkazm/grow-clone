@@ -16,6 +16,8 @@ import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Watchlist from './pages/Watchlist';
 import Orders from './pages/Orders';
+import Balance from './pages/Balance';
+import FNOPnLReport from './pages/FNOPnLReport';
 import News from './pages/News';
 import IPOs from './pages/IPOs';
 import ProtectedRoute from './components/common/ProtectedRoute';
@@ -102,6 +104,16 @@ function App() {
         <Route path="/orders" element={
           <ProtectedRoute>
             <Orders />
+          </ProtectedRoute>
+        } />
+        <Route path="/balance" element={
+          <ProtectedRoute>
+            <Balance />
+          </ProtectedRoute>
+        } />
+        <Route path="/fno-pnl-report" element={
+          <ProtectedRoute>
+            <FNOPnLReport />
           </ProtectedRoute>
         } />
         <Route path="/watchlist" element={
