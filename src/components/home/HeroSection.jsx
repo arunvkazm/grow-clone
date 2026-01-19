@@ -32,7 +32,7 @@ const HeroSection = () => {
               <span className="text-primary-600">Mutual Funds</span>, & more
             </h1>
             <p className="text-xl text-gray-600 mb-8 max-w-2xl">
-              Join millions of Indians who trust Market with their investment journey.
+              Join millions of Indians who trust Groww with their investment journey.
               Start investing with expert recommendations and zero commission.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
@@ -52,7 +52,7 @@ const HeroSection = () => {
           </div>
           <div className="lg:w-1/2 mt-12 lg:mt-0">
             <div className="bg-white rounded-2xl shadow-card p-8 max-w-md mx-auto lg:ml-auto">
-              <h3 className="text-2xl font-bold text-gray-900 mb-4">Why Choose Market?</h3>
+              <h3 className="text-2xl font-bold text-gray-900 mb-4">Why Choose Groww?</h3>
               <div className="space-y-6">
                 {features.map((feature, index) => (
                   <div key={index} className="flex items-start space-x-4">

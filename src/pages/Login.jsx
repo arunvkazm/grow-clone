@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { FiMail, FiLock, FiArrowRight } from 'react-icons/fi';
 import { useAuth } from '../hooks/useAuth';
 import toast from 'react-hot-toast';
+import GrowwLogo from '../components/common/GrowwLogo';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -24,7 +25,7 @@ const Login = () => {
         const result = login(email, password);
         if (result.success) {
           toast.success('Login successful!');
-          navigate('/dashboard');
+          navigate('/explore');
         }
       } else {
         toast.error('Please fill in all fields');
@@ -36,18 +37,18 @@ const Login = () => {
     }
   };
 
-  // Demo credentials
+  // Demo credentials - Auto login as Vashim
   const handleDemoLogin = () => {
-    setEmail('demo@market.com');
+    setEmail('vashim@market.com');
     setPassword('demo123');
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-white flex flex-col justify-center py-12 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
-        <Link to="/" className="flex items-center justify-center space-x-2">
-          <span className="text-3xl font-bold text-primary-600">Market</span>
-        </Link>
+        <div className="flex items-center justify-center">
+          <GrowwLogo size="lg" />
+        </div>
         <h2 className="mt-6 text-center text-3xl font-bold text-gray-900">
           Sign in to your account
         </h2>

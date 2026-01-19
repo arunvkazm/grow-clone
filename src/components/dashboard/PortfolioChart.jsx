@@ -6,7 +6,7 @@ const PortfolioChart = ({ timeRange }) => {
   // Generate portfolio data based on time range
   const generateData = () => {
     const data = [];
-    let value = 1000000; // Starting value
+    let value = 10000000000; // Starting value ₹1000 Cr
     
     const months = timeRange === '1Y' ? 12 : timeRange === '6M' ? 6 : timeRange === '3M' ? 3 : timeRange === '1M' ? 1 : 24;
     
@@ -40,7 +40,10 @@ const PortfolioChart = ({ timeRange }) => {
         <div className="bg-white p-3 border border-gray-200 rounded-lg shadow-lg">
           <p className="text-gray-600">{label}</p>
           <p className="text-lg font-bold text-gray-900">
-            ₹{payload[0].value.toLocaleString('en-IN')}
+            {payload[0].value >= 10000000 
+              ? `₹${(payload[0].value / 10000000).toFixed(2)} Cr`
+              : `₹${payload[0].value.toLocaleString('en-IN')}`
+            }
           </p>
           <p className={`text-sm ${parseFloat(payload[0].payload.change) >= 0 ? 'text-green-600' : 'text-red-600'}`}>
             {parseFloat(payload[0].payload.change) >= 0 ? '+' : ''}{payload[0].payload.change}%
@@ -67,7 +70,12 @@ const PortfolioChart = ({ timeRange }) => {
           <YAxis 
             stroke="#6b7280"
             fontSize={12}
-            tickFormatter={(value) => `₹${(value / 100000).toFixed(1)}L`}
+            tickFormatter={(value) => {
+              if (value >= 10000000) {
+                return `₹${(value / 10000000).toFixed(1)}Cr`;
+              }
+              return `₹${(value / 100000).toFixed(1)}L`;
+            }}
           />
           <Tooltip content={<CustomTooltip />} />
           <defs>

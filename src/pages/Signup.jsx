@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { FiMail, FiLock, FiUser, FiPhone, FiArrowRight } from 'react-icons/fi';
 import { useAuth } from '../hooks/useAuth';
 import toast from 'react-hot-toast';
+import GrowwLogo from '../components/common/GrowwLogo';
 
 const Signup = () => {
   const [formData, setFormData] = useState({
@@ -51,11 +52,11 @@ const Signup = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-white flex flex-col justify-center py-12 sm:px-6 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
-        <Link to="/" className="flex items-center justify-center space-x-2">
-          <span className="text-3xl font-bold text-primary-600">Market</span>
-        </Link>
+        <div className="flex items-center justify-center">
+          <GrowwLogo size="lg" />
+        </div>
         <h2 className="mt-6 text-center text-3xl font-bold text-gray-900">
           Create your account
         </h2>

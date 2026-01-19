@@ -20,9 +20,9 @@ export const AuthProvider = ({ children }) => {
     // Dummy login - in real app, this would be an API call
     const dummyUser = {
       id: 1,
-      name: 'John Doe',
+      name: 'Vashim',
       email: email,
-      portfolioValue: 1250000,
+      portfolioValue: 12800000000, // ₹128 Cr
       joinedDate: '2023-01-15'
     };
     
@@ -35,9 +35,9 @@ export const AuthProvider = ({ children }) => {
     // Dummy signup
     const newUser = {
       id: Date.now(),
-      name: userData.name,
+      name: userData.name || 'Vashim',
       email: userData.email,
-      portfolioValue: 0,
+      portfolioValue: 12800000000, // ₹128 Cr
       joinedDate: new Date().toISOString().split('T')[0]
     };
     

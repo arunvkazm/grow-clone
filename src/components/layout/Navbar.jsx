@@ -1,22 +1,34 @@
-// src/components/layout/Navbar.jsx
-import React, { useState } from 'react';
+// src/components/layout/Navbar.jsx - Groww Style
+import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { FiSearch, FiUser, FiMenu, FiX } from 'react-icons/fi';
-import { FaChartLine } from 'react-icons/fa';
+import { FiSearch, FiMenu, FiX, FiChevronDown } from 'react-icons/fi';
 import toast from 'react-hot-toast';
 import { useAuth } from '../../hooks/useAuth';
+import GrowwLogo from '../common/GrowwLogo';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [showMoreMenu, setShowMoreMenu] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const { user, logout } = useAuth();
   const navigate = useNavigate();
+  const moreMenuRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (moreMenuRef.current && !moreMenuRef.current.contains(event.target)) {
+        setShowMoreMenu(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   const handleSearch = (e) => {
     e.preventDefault();
     if (searchQuery.trim()) {
       toast.success(`Searching for "${searchQuery}"`);
-      // In a real app, you would redirect to search results
     }
   };
 
@@ -26,85 +38,75 @@ const Navbar = () => {
     navigate('/');
   };
 
-  const navItems = [
-    { name: 'Stocks', path: '/stocks' },
-    { name: 'Mutual Funds', path: '/mutual-funds' },
-    { name: 'IPOs', path: '/ipos' },
-    { name: 'News', path: '/news' },
-    { name: 'Watchlist', path: '/watchlist' },
-    { name: 'Dashboard', path: '/dashboard' },
-  ];
-
   return (
-    <nav className="sticky top-0 z-50 bg-white shadow-sm border-b border-gray-200">
+    <nav className="sticky top-0 z-50 bg-white border-b border-gray-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between h-16">
+        <div className="flex justify-between items-center h-16">
           {/* Logo */}
-          <div className="flex items-center">
-            <Link to="/" className="flex items-center space-x-2">
-              <FaChartLine className="h-8 w-8 text-primary-500" />
-              <span className="text-2xl font-bold text-gray-900">Market</span>
+          <GrowwLogo size="md" />
+
+          {/* Desktop Navigation - Groww Style */}
+          <div className="hidden md:flex items-center space-x-6 flex-1 max-w-2xl mx-6">
+            <Link to="/stocks" className="text-gray-700 hover:text-gray-900 font-medium transition-colors py-2">
+              Stocks
             </Link>
-          </div>
-
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
-            {navItems.map((item) => (
-              <Link
-                key={item.name}
-                to={item.path}
-                className="text-gray-700 hover:text-primary-600 font-medium transition-colors"
+            <Link to="/futures-and-options" className="text-gray-700 hover:text-gray-900 font-medium transition-colors py-2">
+              F&O
+            </Link>
+            <Link to="/mutual-funds" className="text-gray-700 hover:text-gray-900 font-medium transition-colors py-2">
+              Mutual Funds
+            </Link>
+            <div className="relative" ref={moreMenuRef}>
+              <button
+                onClick={() => setShowMoreMenu(!showMoreMenu)}
+                className="flex items-center text-gray-700 hover:text-gray-900 font-medium transition-colors py-2"
               >
-                {item.name}
-              </Link>
-            ))}
+                More
+                <FiChevronDown className={`ml-1 h-4 w-4 transition-transform ${showMoreMenu ? 'rotate-180' : ''}`} />
+              </button>
+              {showMoreMenu && (
+                <div className="absolute top-full left-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-2 z-50">
+                  <Link to="/ipos" className="block px-4 py-2 text-gray-700 hover:bg-gray-50" onClick={() => setShowMoreMenu(false)}>IPOs</Link>
+                  <Link to="/news" className="block px-4 py-2 text-gray-700 hover:bg-gray-50" onClick={() => setShowMoreMenu(false)}>News</Link>
+                  <Link to="/watchlist" className="block px-4 py-2 text-gray-700 hover:bg-gray-50" onClick={() => setShowMoreMenu(false)}>Watchlist</Link>
+                </div>
+              )}
+            </div>
 
-            {/* Search Bar */}
-            <form onSubmit={handleSearch} className="relative">
+            {/* Search Bar - Groww Style */}
+            <form onSubmit={handleSearch} className="relative flex-1 max-w-md ml-4">
+              <FiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
               <input
                 type="text"
-                placeholder="Search stocks, funds..."
-                className="w-64 px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                placeholder="Search Groww..."
+                className="w-full pl-10 pr-20 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent text-sm"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
-              <button
-                type="submit"
-                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
-              >
-                <FiSearch className="h-5 w-5" />
-              </button>
+              <span className="absolute right-3 top-1/2 transform -translate-y-1/2 text-xs text-gray-400">Ctrl+K</span>
             </form>
+          </div>
 
             {/* Auth Section */}
             <div className="flex items-center space-x-4">
               {user ? (
                 <div className="flex items-center space-x-4">
-                  <span className="text-gray-700">Hi, {user.name}</span>
+                <span className="text-gray-700 hidden sm:block">Hi, {user.name}</span>
                   <button
                     onClick={handleLogout}
-                    className="px-4 py-2 bg-primary-500 text-white rounded-lg hover:bg-primary-600 transition-colors"
+                  className="px-4 py-2 text-gray-700 hover:text-gray-900 font-medium transition-colors"
                   >
                     Logout
                   </button>
                 </div>
               ) : (
-                <>
                   <Link
                     to="/login"
-                    className="px-4 py-2 text-primary-600 hover:text-primary-700 font-medium"
+                className="px-4 py-2 text-gray-700 hover:text-gray-900 font-medium transition-colors"
                   >
-                    Login
+                Login/Sign up
                   </Link>
-                  <Link
-                    to="/signup"
-                    className="px-4 py-2 bg-primary-500 text-white rounded-lg hover:bg-primary-600 transition-colors"
-                  >
-                    Sign Up
-                  </Link>
-                </>
               )}
-            </div>
           </div>
 
           {/* Mobile menu button */}
@@ -126,21 +128,26 @@ const Navbar = () => {
         {isMenuOpen && (
           <div className="md:hidden py-4 border-t border-gray-200">
             <div className="flex flex-col space-y-4">
-              {navItems.map((item) => (
-                <Link
-                  key={item.name}
-                  to={item.path}
-                  className="text-gray-700 hover:text-primary-600 font-medium px-3 py-2"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  {item.name}
+              <Link to="/stocks" className="text-gray-700 hover:text-primary-600 font-medium px-3 py-2" onClick={() => setIsMenuOpen(false)}>
+                Stocks
+              </Link>
+              <Link to="/futures-and-options" className="text-gray-700 hover:text-primary-600 font-medium px-3 py-2" onClick={() => setIsMenuOpen(false)}>
+                F&O
+              </Link>
+              <Link to="/mutual-funds" className="text-gray-700 hover:text-primary-600 font-medium px-3 py-2" onClick={() => setIsMenuOpen(false)}>
+                Mutual Funds
+              </Link>
+              <Link to="/ipos" className="text-gray-700 hover:text-primary-600 font-medium px-3 py-2" onClick={() => setIsMenuOpen(false)}>
+                IPOs
+              </Link>
+              <Link to="/news" className="text-gray-700 hover:text-primary-600 font-medium px-3 py-2" onClick={() => setIsMenuOpen(false)}>
+                News
                 </Link>
-              ))}
               
               <form onSubmit={handleSearch} className="px-3">
                 <input
                   type="text"
-                  placeholder="Search..."
+                  placeholder="Search Groww..."
                   className="w-full px-4 py-2 rounded-lg border border-gray-300"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
@@ -156,22 +163,13 @@ const Navbar = () => {
                     Logout
                   </button>
                 ) : (
-                  <>
                     <Link
                       to="/login"
-                      className="block w-full text-center px-4 py-2 mb-2 border border-primary-500 text-primary-500 rounded-lg"
-                      onClick={() => setIsMenuOpen(false)}
-                    >
-                      Login
-                    </Link>
-                    <Link
-                      to="/signup"
                       className="block w-full text-center px-4 py-2 bg-primary-500 text-white rounded-lg"
                       onClick={() => setIsMenuOpen(false)}
                     >
-                      Sign Up
+                    Login/Sign up
                     </Link>
-                  </>
                 )}
               </div>
             </div>

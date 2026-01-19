@@ -9,16 +9,23 @@ export default {
     extend: {
       colors: {
         primary: {
-          50: '#f0f9f0',
-          100: '#dcf0dc',
-          200: '#bde1bd',
-          300: '#8fcc8f',
-          400: '#5aae5a',
-          500: '#00d09c',
+          50: '#f0fdf4',
+          100: '#dcfce7',
+          200: '#bbf7d0',
+          300: '#86efac',
+          400: '#4ade80',
+          500: '#00D09C', // Groww's exact green
           600: '#00b386',
           700: '#009c73',
           800: '#007a5a',
           900: '#006349',
+        },
+        groww: {
+          green: '#00D09C',
+          darkGreen: '#00b386',
+          text: '#1F2937',
+          gray: '#6B7280',
+          lightGray: '#F3F4F6',
         }
       },
       fontFamily: {
