@@ -1,0 +1,82 @@
+/* src/styles/global.css */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+@import 'tailwindcss';
+
+@theme {
+  --font-sans: 'Inter', system-ui, sans-serif;
+  
+  --color-primary-50: #f0f9f0;
+  --color-primary-100: #dcf0dc;
+  --color-primary-200: #bde1bd;
+  --color-primary-300: #8fcc8f;
+  --color-primary-400: #5aae5a;
+  --color-primary-500: #00d09c;
+  --color-primary-600: #00b386;
+  --color-primary-700: #009c73;
+  --color-primary-800: #007a5a;
+  --color-primary-900: #006349;
+  
+  --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.08);
+  --shadow-card-hover: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+/* Custom styles */
+body {
+  font-family: var(--font-sans);
+  color: #1f2937;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Chart tooltip styles */
+.recharts-tooltip-wrapper {
+  box-shadow: var(--shadow-card-hover) !important;
+}
+
+.recharts-default-tooltip {
+  background: white !important;
+  border: 1px solid #e5e7eb !important;
+  border-radius: 0.5rem !important;
+  box-shadow: var(--shadow-card) !important;
+}
+
+/* Utility classes */
+.btn-primary {
+  @apply px-4 py-2 bg-primary-500 text-white rounded-lg hover:bg-primary-600 transition-colors focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2;
+}
+
+.btn-secondary {
+  @apply px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2;
+}
+
+.card {
+  @apply bg-white rounded-xl shadow-card hover:shadow-card-hover transition-shadow;
+}
+
+.input-field {
+  @apply w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent;
+}
+
+.skeleton {
+  @apply animate-pulse bg-gray-200 rounded;
+}
