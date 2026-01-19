@@ -9,6 +9,7 @@ import {
   FiLogOut,
   FiChevronRight
 } from 'react-icons/fi';
+import { MdAccountBalance } from 'react-icons/md';
 import { useAuth } from '../../hooks/useAuth';
 import toast from 'react-hot-toast';
 
@@ -43,31 +44,26 @@ const ProfileDropdown = () => {
 
   const maskEmail = (email) => {
     if (!email) return 'wasim@market.com';
-    const [localPart, domain] = email.split('@');
-    if (localPart.length <= 2) return email;
-    const masked = localPart.charAt(0) + '*'.repeat(localPart.length - 2) + localPart.charAt(localPart.length - 1);
-    return `${masked}@${domain}`;
-  };
-
-  const formatLargeCurrency = (amount) => {
-    const cr = amount / 10000000;
-    if (cr >= 100) {
-      return `₹${cr.toFixed(0)} Cr`;
-    }
-    return `₹${cr.toFixed(2)} Cr`;
+    // Show full email without masking (as per screenshot)
+    return email;
   };
 
   const menuItems = [
     { 
       icon: FiCreditCard, 
       label: 'Stocks, F&O balance', 
-      balance: formatLargeCurrency(1280000000), // ₹128 Cr
+      balance: '₹12,80,00,00,000',
       onClick: () => navigate('/balance')
     },
     { 
       icon: FiFileText, 
       label: 'All Orders', 
       onClick: () => navigate('/orders')
+    },
+    { 
+      icon: MdAccountBalance, 
+      label: 'Bank Details', 
+      onClick: () => {}
     },
     { 
       icon: FiHeadphones, 
@@ -95,12 +91,12 @@ const ProfileDropdown = () => {
       {isOpen && (
         <div className="absolute right-0 mt-2 w-72 bg-white rounded-lg shadow-xl border border-gray-200 z-50">
           {/* User Info Section */}
-          <div className="px-4 py-3 border-b border-gray-200 flex items-center justify-between">
-            <div className="flex-1">
-              <p className="text-sm font-bold text-gray-900">{user?.name || 'Wasim Anish Khan'}</p>
-              <p className="text-xs text-gray-500 mt-1">{maskEmail(user?.email || 'wasim@market.com')}</p>
+          <div className="px-4 py-3 border-b border-gray-200 flex items-start justify-between">
+            <div className="flex-1 min-w-0">
+              <p className="text-base font-bold text-gray-900 leading-tight">{user?.name || 'Wasim Anish Khan'}</p>
+              <p className="text-xs text-gray-500 mt-1 truncate">{maskEmail(user?.email || 'wasim@market.com')}</p>
             </div>
-            <button className="p-2 hover:bg-gray-100 rounded-lg transition-colors">
+            <button className="p-2 hover:bg-gray-100 rounded-lg transition-colors ml-2 flex-shrink-0">
               <FiSettings className="h-4 w-4 text-gray-600" />
             </button>
           </div>
@@ -116,18 +112,16 @@ const ProfileDropdown = () => {
                     item.onClick();
                     setIsOpen(false);
                   }}
-                  className="w-full px-4 py-3 flex items-center justify-between hover:bg-gray-50 transition-colors text-left"
+                  className="w-full px-4 py-3 flex items-center hover:bg-gray-50 transition-colors text-left"
                 >
-                  <div className="flex items-center space-x-3 flex-1">
-                    <Icon className="h-5 w-5 text-gray-600 flex-shrink-0" />
-                    <div className="flex-1 flex items-center justify-between">
-                      <p className="text-sm font-medium text-gray-900">{item.label}</p>
-                      {item.balance && (
-                        <p className="text-xs font-semibold text-gray-900 ml-2">{item.balance}</p>
-                      )}
-                    </div>
+                  <Icon className="h-5 w-5 text-gray-600 flex-shrink-0 mr-3" />
+                  <div className="flex-1 min-w-0">
+                    {item.balance && (
+                      <p className="text-xs text-gray-500 mb-0.5 leading-tight">{item.balance}</p>
+                    )}
+                    <p className="text-sm font-medium text-gray-900 leading-tight">{item.label}</p>
                   </div>
-                  <FiChevronRight className="h-4 w-4 text-gray-400 flex-shrink-0 ml-2" />
+                  <FiChevronRight className="h-4 w-4 text-gray-400 flex-shrink-0 ml-auto" />
                 </button>
               );
             })}

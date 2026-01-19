@@ -259,7 +259,7 @@ const TopMarketMovers = () => {
               <div className="col-span-5 flex items-center space-x-3">
                 <CompanyLogo companyName={stock.name} className="w-10 h-10 flex-shrink-0" />
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-semibold text-gray-900 truncate">{stock.name}</p>
+                  <p className="text-sm font-semibold text-gray-600 truncate">{stock.name}</p>
                 </div>
                 {/* Sparkline */}
                 <div className="w-16 h-8 flex-shrink-0">
@@ -279,7 +279,7 @@ const TopMarketMovers = () => {
               
               {/* Market Price Column */}
               <div className="col-span-4 text-right">
-                <p className="text-sm font-semibold text-gray-900">₹{stock.price.toLocaleString('en-IN', { maximumFractionDigits: 2 })}</p>
+                <p className="text-sm font-semibold text-gray-600">₹{stock.price.toLocaleString('en-IN', { maximumFractionDigits: 2 })}</p>
                 <p className={`text-xs font-medium ${changeColor}`}>
                   {isPositive ? '+' : ''}{stock.change.toFixed(2)} ({isPositive ? '+' : ''}{stock.changePercent.toFixed(2)}%)
                 </p>

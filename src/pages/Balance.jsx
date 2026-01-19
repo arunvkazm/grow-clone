@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { FiSearch, FiBell, FiChevronDown, FiArrowRight, FiX, FiClock } from 'react-icons/fi';
 import { useAuth } from '../hooks/useAuth';
-import MarketIndices from '../components/dashboard/MarketIndices';
 import ProfileDropdown from '../components/dashboard/ProfileDropdown';
 import GrowwLogo from '../components/common/GrowwLogo';
 import Footer from '../components/layout/Footer';
@@ -28,11 +27,8 @@ const Balance = () => {
   const withdrawableBalance = cashBalance;
 
   const formatLargeCurrency = (amount) => {
-    const cr = amount / 10000000;
-    if (cr >= 100) {
-      return `₹${cr.toFixed(0)} Cr`;
-    }
-    return `₹${cr.toFixed(2)} Cr`;
+    // Format in Indian number system (15,00,00,000 format)
+    return `${amount.toLocaleString('en-IN')} Cr`;
   };
 
   const quickAddAmounts = [1000, 5000, 10000];
@@ -227,29 +223,8 @@ const Balance = () => {
             </div>
           </div>
 
-          {/* Secondary Nav Links */}
-          <div className="h-12 flex items-center justify-between border-t border-gray-100">
-            <div className="flex items-center space-x-6">
-              <Link to="/explore" className="text-sm font-medium text-gray-700 hover:text-gray-900">Explore</Link>
-              <Link to="/holdings" className="text-sm font-medium text-gray-700 hover:text-gray-900">Holdings</Link>
-              <Link to="/positions" className="text-sm font-medium text-gray-700 hover:text-gray-900">Positions</Link>
-              <Link to="/orders" className="text-sm font-medium text-gray-700 hover:text-gray-900">Orders</Link>
-              <Link to="/watchlist" className="text-sm font-medium text-gray-700 hover:text-gray-900">Watchlist</Link>
-            </div>
-            <div className="flex items-center space-x-3">
-              <button className="flex items-center space-x-2 px-3 py-1.5 text-sm font-medium text-gray-700 hover:text-gray-900 border border-gray-300 rounded-lg">
-                <span>0</span>
-                <span>Terminal</span>
-              </button>
-              <button className="px-3 py-1.5 text-sm font-medium text-gray-700 hover:text-gray-900 border border-gray-300 rounded-lg">
-                915
-              </button>
-            </div>
-          </div>
         </div>
       </header>
-
-      <MarketIndices />
 
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -260,10 +235,10 @@ const Balance = () => {
             <div className="bg-white border border-gray-200 rounded-lg p-6">
               <h2 className="text-sm font-medium text-gray-700 mb-4">Stocks, F&O balance</h2>
               <div className="mb-6">
-                <p className="text-3xl font-bold text-gray-900">{formatLargeCurrency(balance)}</p>
+                <p className="text-3xl font-bold text-gray-900">₹{balance.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
               </div>
               
-              <div className="space-y-4">
+              <div className="space-y-0">
                 {/* Cash Section */}
                 <div className="flex items-center justify-between py-3 border-b border-gray-100">
                   <span className="text-sm text-gray-700">Cash</span>
@@ -281,7 +256,7 @@ const Balance = () => {
                 {/* Pledge Section */}
                 <div className="py-3">
                   <div className="flex items-start justify-between">
-                    <div className="flex-1">
+                    <div className="flex-1 pr-4">
                       <p className="text-sm font-medium text-gray-700 mb-1">Pledge</p>
                       <p className="text-xs text-gray-500 leading-relaxed">
                         Add balance for stocks intraday and F&O by pledging your holdings on Groww.
@@ -289,7 +264,7 @@ const Balance = () => {
                     </div>
                     <button 
                       onClick={handlePledgeAdd}
-                      className="ml-4 px-4 py-1.5 text-sm font-medium text-primary-600 hover:text-primary-700 border border-primary-600 rounded-lg hover:bg-primary-50 transition-colors whitespace-nowrap"
+                      className="px-4 py-1.5 text-sm font-medium text-primary-600 hover:text-primary-700 border border-primary-600 rounded-lg hover:bg-primary-50 transition-colors whitespace-nowrap flex-shrink-0"
                     >
                       Add
                     </button>
@@ -337,25 +312,9 @@ const Balance = () => {
               <div className="space-y-6">
                 {/* Amount Display */}
                 <div>
-                  <div className="mb-4 relative">
-                    <span className="absolute left-0 text-4xl font-bold text-gray-900 pointer-events-none">₹</span>
-                    <input
-                      type="text"
-                      value={amount || ''}
-                      onChange={handleAmountChange}
-                      onFocus={(e) => {
-                        e.target.select();
-                      }}
-                      onBlur={(e) => {
-                        if (!amount || amount === '') {
-                          setAmount('100');
-                        }
-                      }}
-                      className="text-4xl font-bold text-gray-900 w-full border-none outline-none bg-transparent focus:ring-0 p-0 pl-6"
-                      placeholder="0"
-                      inputMode="numeric"
-                    />
-                  </div>
+                  <p className="text-4xl font-bold text-gray-900 mb-6">
+                    ₹{amount || '100'}
+                  </p>
                   
                   {/* Quick Add Buttons */}
                   <div className="flex space-x-3 mb-6">
@@ -373,8 +332,8 @@ const Balance = () => {
 
                 {/* QR Code Payment Section */}
                 <div className="border border-gray-200 rounded-lg p-4">
-                  <div className="flex items-center space-x-3 mb-3">
-                    <div className="w-10 h-10 bg-gradient-to-br from-orange-400 to-green-500 rounded-lg flex items-center justify-center">
+                  <div className="flex items-center space-x-3">
+                    <div className="w-10 h-10 bg-gradient-to-br from-orange-400 to-green-500 rounded-lg flex items-center justify-center flex-shrink-0">
                       <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
                         <path d="M3 3h8v8H3V3zm10 0h8v8h-8V3zM3 13h8v8H3v-8zm10 0h8v8h-8v-8z"/>
                       </svg>
@@ -389,7 +348,7 @@ const Balance = () => {
                 <div className="border border-gray-200 rounded-lg p-4 cursor-pointer hover:bg-gray-50 transition-colors">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-3">
-                      <div className="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center">
+                      <div className="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center flex-shrink-0">
                         <span className="text-white text-xs font-bold">SBI</span>
                       </div>
                       <div>
@@ -397,7 +356,7 @@ const Balance = () => {
                         <p className="text-xs text-gray-500">....1640</p>
                       </div>
                     </div>
-                    <FiArrowRight className="h-5 w-5 text-gray-400" />
+                    <FiArrowRight className="h-5 w-5 text-gray-400 flex-shrink-0" />
                   </div>
                 </div>
 
@@ -405,7 +364,7 @@ const Balance = () => {
                 <button 
                   onClick={handleAddMoney}
                   disabled={isProcessing || !amount || parseFloat(amount.replace(/,/g, '')) <= 0}
-                  className={`w-full py-3 font-medium rounded-lg transition-colors ${
+                  className={`w-full py-3 text-sm font-medium rounded-lg transition-colors ${
                     isProcessing || !amount || parseFloat(amount.replace(/,/g, '')) <= 0
                       ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
                       : 'bg-primary-600 text-white hover:bg-primary-700'
@@ -419,9 +378,25 @@ const Balance = () => {
                 {/* Withdrawable Balance */}
                 <div>
                   <div className="mb-4">
-                    {withdrawableBalance > 0 ? (
+                    <p className="text-xs text-gray-600 mb-2">Available to withdraw</p>
+                    <p className="text-4xl font-bold text-gray-900 mb-6">
+                      ₹{withdrawableBalance.toLocaleString('en-IN', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}
+                    </p>
+                  </div>
+                  
+                  {/* No Balance Message */}
+                  {withdrawableBalance === 0 && (
+                    <div className="bg-gray-100 border border-gray-200 rounded-lg p-4 mb-6">
+                      <p className="text-sm text-gray-600">No balance available to withdraw</p>
+                    </div>
+                  )}
+
+                  {/* Withdraw Amount Input */}
+                  {withdrawableBalance > 0 && (
+                    <div className="mb-6">
+                      <label className="block text-sm text-gray-600 mb-2">Enter amount to withdraw</label>
                       <div className="relative">
-                        <span className="absolute left-0 text-4xl font-bold text-gray-900 pointer-events-none">₹</span>
+                        <span className="absolute left-0 text-2xl font-bold text-gray-900 pointer-events-none pl-4 pt-3">₹</span>
                         <input
                           type="text"
                           value={withdrawAmount || ''}
@@ -429,32 +404,35 @@ const Balance = () => {
                           onFocus={(e) => {
                             e.target.select();
                           }}
-                          onBlur={(e) => {
-                            if (!withdrawAmount || withdrawAmount === '') {
-                              setWithdrawAmount('');
-                            }
-                          }}
-                          className="text-4xl font-bold text-gray-900 w-full border-none outline-none bg-transparent focus:ring-0 p-0 pl-6"
-                          placeholder={withdrawableBalance.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                          placeholder="0"
+                          className="w-full text-2xl font-bold text-gray-900 border border-gray-300 rounded-lg pl-12 pr-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
                           inputMode="numeric"
                         />
                       </div>
-                    ) : (
-                      <p className="text-4xl font-bold text-gray-900 mb-6">
-                        ₹{withdrawableBalance.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-                      </p>
-                    )}
-                  </div>
-                  
-                  {/* No Balance Message */}
-                  {withdrawableBalance === 0 && cashBalance === 0 && (
-                    <div className="bg-gray-100 border border-gray-200 rounded-lg p-4 mb-6">
-                      <p className="text-sm text-gray-600">No balance available to withdraw</p>
+                      
+                      {/* Quick Withdraw Buttons */}
+                      <div className="flex space-x-3 mt-4">
+                        {[1000, 5000, 10000].map((value) => {
+                          if (value > withdrawableBalance) return null;
+                          return (
+                            <button
+                              key={value}
+                              onClick={() => {
+                                const newAmount = Math.min(value, withdrawableBalance);
+                                setWithdrawAmount(newAmount.toLocaleString('en-IN'));
+                              }}
+                              className="flex-1 px-4 py-2 text-sm font-medium text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+                            >
+                              ₹{value.toLocaleString('en-IN')}
+                            </button>
+                          );
+                        })}
+                      </div>
                     </div>
                   )}
 
                   {/* Pending Withdrawals Info */}
-                  {pendingWithdrawals.length > 0 && (
+                  {pendingWithdrawals.length > 0 && withdrawableBalance > 0 && (
                     <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3 mb-6">
                       <div className="flex items-start space-x-2">
                         <FiClock className="h-4 w-4 text-yellow-600 mt-0.5 flex-shrink-0" />
@@ -469,34 +447,13 @@ const Balance = () => {
                       </div>
                     </div>
                   )}
-
-                  {/* Quick Withdraw Buttons */}
-                  {withdrawableBalance > 0 && (
-                    <div className="flex space-x-3 mb-6">
-                      {[1000, 5000, 10000].map((value) => {
-                        if (value > withdrawableBalance) return null;
-                        return (
-                          <button
-                            key={value}
-                            onClick={() => {
-                              const newAmount = Math.min(value, withdrawableBalance);
-                              setWithdrawAmount(newAmount.toLocaleString('en-IN'));
-                            }}
-                            className="flex-1 px-4 py-2 text-sm font-medium text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
-                          >
-                            ₹{value.toLocaleString('en-IN')}
-                          </button>
-                        );
-                      })}
-                    </div>
-                  )}
                 </div>
 
                 {/* Bank Account Section */}
                 <div className="border border-gray-200 rounded-lg p-4 cursor-pointer hover:bg-gray-50 transition-colors">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-3">
-                      <div className="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center">
+                      <div className="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center flex-shrink-0">
                         <span className="text-white text-xs font-bold">SBI</span>
                       </div>
                       <div>
@@ -504,7 +461,7 @@ const Balance = () => {
                         <p className="text-xs text-gray-500">....1640</p>
                       </div>
                     </div>
-                    <FiArrowRight className="h-5 w-5 text-gray-400" />
+                    <FiArrowRight className="h-5 w-5 text-gray-400 flex-shrink-0" />
                   </div>
                 </div>
 
@@ -512,7 +469,7 @@ const Balance = () => {
                 <button
                   onClick={handleWithdraw}
                   disabled={withdrawableBalance === 0 || isProcessing || !withdrawAmount || parseFloat(withdrawAmount.replace(/,/g, '')) <= 0}
-                  className={`w-full py-3 font-medium rounded-lg transition-colors ${
+                  className={`w-full py-3 text-sm font-medium rounded-lg transition-colors ${
                     withdrawableBalance === 0 || isProcessing || !withdrawAmount || parseFloat(withdrawAmount.replace(/,/g, '')) <= 0
                       ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
                       : 'bg-primary-600 text-white hover:bg-primary-700'

@@ -151,8 +151,8 @@ const Explore = () => {
                         <CompanyLogo companyName={stock.symbol} className="w-10 h-10" />
                       )}
                     </div>
-                    <p className="text-sm font-semibold text-gray-900 mb-2 truncate">{stock.symbol}</p>
-                    <p className="text-lg font-bold text-gray-900 mb-1">₹{stock.price.toFixed(2)}</p>
+                    <p className="text-sm font-semibold text-gray-600 mb-2 truncate">{stock.symbol}</p>
+                    <p className="text-base font-semibold text-gray-600 mb-1">₹{stock.price.toFixed(2)}</p>
                     <div className={`flex items-center space-x-1 text-sm font-medium ${stock.isPositive ? 'text-green-600' : 'text-red-600'}`}>
                       <span>{stock.isPositive ? '+' : ''}{stock.change.toFixed(2)} ({stock.isPositive ? '+' : ''}{stock.changePercent.toFixed(2)}%)</span>
                     </div>
@@ -180,8 +180,8 @@ const Explore = () => {
                     <div className="mb-3">
                       <CompanyLogo companyName={stock.symbol} className="w-10 h-10" />
                     </div>
-                    <p className="text-sm font-semibold text-gray-900 mb-2 truncate">{stock.symbol}</p>
-                    <p className="text-lg font-bold text-gray-900 mb-1">₹{stock.price.toFixed(2)}</p>
+                    <p className="text-sm font-semibold text-gray-600 mb-2 truncate">{stock.symbol}</p>
+                    <p className="text-base font-semibold text-gray-600 mb-1">₹{stock.price.toFixed(2)}</p>
                     <div className="flex items-center space-x-1 text-green-600 text-sm font-medium">
                       <span>+{stock.change.toFixed(2)} (+{stock.changePercent.toFixed(2)}%)</span>
                     </div>

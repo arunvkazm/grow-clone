@@ -69,10 +69,10 @@ const MostBoughtStocks = () => {
             </div>
             
             {/* Stock Name */}
-            <p className="text-sm font-semibold text-gray-900 mb-2">{stock.symbol}</p>
+            <p className="text-sm font-semibold text-gray-600 mb-2">{stock.symbol}</p>
             
             {/* Price */}
-            <p className="text-lg font-bold text-gray-900 mb-1">₹{stock.price.toFixed(2)}</p>
+            <p className="text-base font-semibold text-gray-600 mb-1">₹{stock.price.toFixed(2)}</p>
             
             {/* Change */}
             <div className="flex items-center space-x-1 text-green-600">

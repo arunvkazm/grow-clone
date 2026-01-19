@@ -26,7 +26,7 @@ const GrowwETFs = () => {
                 <span className={`text-sm font-bold ${etf.logoColor}`}>{etf.logo}</span>
               </div>
             </div>
-            <p className="text-sm font-semibold text-gray-900 mb-2 truncate">{etf.name}</p>
+            <p className="text-sm font-semibold text-gray-600 mb-2 truncate">{etf.name}</p>
             {etf.isNFO ? (
               <div>
                 <span className="text-xs bg-primary-100 text-primary-700 px-2 py-1 rounded font-medium">NFO</span>
@@ -34,7 +34,7 @@ const GrowwETFs = () => {
               </div>
             ) : (
               <>
-                <p className="text-lg font-bold text-gray-900 mb-1">₹{etf.price.toFixed(2)}</p>
+                <p className="text-base font-semibold text-gray-600 mb-1">₹{etf.price.toFixed(2)}</p>
                 <div className="flex items-center space-x-1 text-green-600 text-sm font-medium">
                   <span>+{etf.change.toFixed(2)} (+{etf.changePercent.toFixed(2)}%)</span>
                 </div>

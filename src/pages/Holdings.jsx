@@ -114,7 +114,7 @@ const Holdings = () => {
               <div className="px-6 py-4 border-b border-gray-200">
                 <h2 className="text-xl font-bold text-gray-900">Your Holdings</h2>
                 <p className="text-sm text-gray-600 mt-1">
-                  Total Value: ₹{((portfolioData.currentValue) / 10000000).toFixed(2)} Cr
+                  Total Value: {portfolioData.currentValue.toLocaleString('en-IN')} Cr
                 </p>
               </div>
               <HoldingsTable />

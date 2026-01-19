@@ -61,27 +61,23 @@ const DashboardSidebar = () => {
   const gainPercentage = ((totalGain / totalInvestment) * 100).toFixed(2);
 
   const formatLargeCurrency = (amount) => {
-    const cr = amount / 10000000;
-    if (cr >= 100) {
-      return `₹${cr.toFixed(0)} Cr`;
-    }
-    return `₹${cr.toFixed(2)} Cr`;
+    // Format in Indian number system (15,00,00,000 format)
+    return `${amount.toLocaleString('en-IN')}`;
   };
 
   return (
     <div className="sticky top-20 space-y-6">
       {/* Your Investments */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
         <h3 className="text-lg font-bold text-gray-900 mb-4">Your investments</h3>
+      <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
         <div className="space-y-4">
           {/* Portfolio Value */}
           <div>
             <div className="flex items-center justify-between mb-2">
               <p className="text-xs text-gray-600">Portfolio Value</p>
-              <FiDollarSign className="h-4 w-4 text-primary-600" />
             </div>
             <p className="text-2xl font-bold text-gray-900 mb-1">
-              {formatLargeCurrency(currentValue)}
+            ₹{formatLargeCurrency(currentValue)}
             </p>
             <div className={`flex items-center space-x-1 ${totalGain >= 0 ? 'text-green-600' : 'text-red-600'}`}>
               {totalGain >= 0 ? (

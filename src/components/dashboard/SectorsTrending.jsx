@@ -106,7 +106,7 @@ const SectorsTrending = () => {
                     </svg>
                   )}
                 </div>
-                <p className="text-sm font-medium text-gray-900">{sector.name}</p>
+                <p className="text-sm font-medium text-gray-600">{sector.name}</p>
               </div>
               
               {/* Gainers/Losers Column */}
