@@ -37,9 +37,9 @@ const Login = () => {
     }
   };
 
-  // Demo credentials - Auto login as Vashim
+  // Demo credentials - Auto login as Wasim Anish Khan
   const handleDemoLogin = () => {
-    setEmail('vashim@market.com');
+    setEmail('wasim@market.com');
     setPassword('demo123');
   };
 

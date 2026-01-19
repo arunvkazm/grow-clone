@@ -91,7 +91,7 @@ const Dashboard = () => {
               
               <div className="w-8 h-8 bg-primary-500 rounded-full flex items-center justify-center cursor-pointer">
                 <span className="text-white text-sm font-semibold">
-                  {(user?.name || 'Vashim').charAt(0).toUpperCase()}
+                  {(user?.name || 'Wasim Anish Khan').charAt(0).toUpperCase()}
                 </span>
               </div>
             </div>

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { FiSearch, FiBell, FiChevronDown, FiArrowRight, FiX } from 'react-icons/fi';
+import { FiSearch, FiBell, FiChevronDown, FiArrowRight, FiX, FiClock } from 'react-icons/fi';
 import { useAuth } from '../hooks/useAuth';
 import MarketIndices from '../components/dashboard/MarketIndices';
 import ProfileDropdown from '../components/dashboard/ProfileDropdown';
@@ -19,8 +19,12 @@ const Balance = () => {
   const [balance, setBalance] = useState(1280000000); // ₹128 Cr
   const [cashBalance, setCashBalance] = useState(0.00);
   const [isProcessing, setIsProcessing] = useState(false);
+  const [pendingWithdrawals, setPendingWithdrawals] = useState([]);
   const isActive = location.pathname === '/balance';
 
+  // Calculate total pending withdrawal amount
+  const totalPendingAmount = pendingWithdrawals.reduce((sum, withdrawal) => sum + withdrawal.amount, 0);
+  // Withdrawable balance is cash balance (money is not deducted until processed after 15 days)
   const withdrawableBalance = cashBalance;
 
   const formatLargeCurrency = (amount) => {
@@ -117,8 +121,9 @@ const Balance = () => {
       return;
     }
 
-    if (withdrawValue > withdrawableBalance) {
-      toast.error('Insufficient balance');
+    // Check if total pending + new withdrawal exceeds available balance
+    if (withdrawValue + totalPendingAmount > cashBalance) {
+      toast.error('Insufficient balance. You have pending withdrawals.');
       return;
     }
 
@@ -131,14 +136,20 @@ const Balance = () => {
     
     // Simulate API call
     setTimeout(() => {
-      const newCashBalance = cashBalance - withdrawValue;
-      const newBalance = balance - withdrawValue;
+      // Create pending withdrawal (money is NOT deducted immediately)
+      const newPendingWithdrawal = {
+        id: Date.now(),
+        amount: withdrawValue,
+        status: 'pending',
+        initiatedDate: new Date().toISOString(),
+        expectedDate: new Date(Date.now() + 15 * 24 * 60 * 60 * 1000).toISOString(), // 15 days from now
+        bankAccount: 'STATE BANK OF INDIA ....1640'
+      };
       
-      setCashBalance(newCashBalance);
-      setBalance(newBalance);
+      setPendingWithdrawals([...pendingWithdrawals, newPendingWithdrawal]);
       setWithdrawAmount('');
       
-      toast.success(`₹${withdrawValue.toLocaleString('en-IN')} withdrawal initiated!`);
+      toast.success(`₹${withdrawValue.toLocaleString('en-IN')} withdrawal request submitted! Your money is now pending and will be processed in 15 days.`);
       setIsProcessing(false);
     }, 1500);
   };
@@ -436,9 +447,26 @@ const Balance = () => {
                   </div>
                   
                   {/* No Balance Message */}
-                  {withdrawableBalance === 0 && (
+                  {withdrawableBalance === 0 && cashBalance === 0 && (
                     <div className="bg-gray-100 border border-gray-200 rounded-lg p-4 mb-6">
                       <p className="text-sm text-gray-600">No balance available to withdraw</p>
+                    </div>
+                  )}
+
+                  {/* Pending Withdrawals Info */}
+                  {pendingWithdrawals.length > 0 && (
+                    <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3 mb-6">
+                      <div className="flex items-start space-x-2">
+                        <FiClock className="h-4 w-4 text-yellow-600 mt-0.5 flex-shrink-0" />
+                        <div className="flex-1">
+                          <p className="text-xs font-medium text-yellow-800 mb-1">
+                            You have {pendingWithdrawals.length} pending withdrawal{pendingWithdrawals.length > 1 ? 's' : ''}
+                          </p>
+                          <p className="text-xs text-yellow-700">
+                            ₹{totalPendingAmount.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} is pending. Your money will be processed in 15 days.
+                          </p>
+                        </div>
+                      </div>
                     </div>
                   )}
 
@@ -492,6 +520,46 @@ const Balance = () => {
                 >
                   {isProcessing ? 'Processing...' : 'Withdraw'}
                 </button>
+
+                {/* Pending Withdrawals Section */}
+                {pendingWithdrawals.length > 0 && (
+                  <div className="mt-6 border-t border-gray-200 pt-6">
+                    <h3 className="text-sm font-semibold text-gray-900 mb-4">Your Pending Withdrawals</h3>
+                    <div className="space-y-3">
+                      {pendingWithdrawals.map((withdrawal) => {
+                        const expectedDate = new Date(withdrawal.expectedDate);
+                        const daysRemaining = Math.ceil((expectedDate - new Date()) / (1000 * 60 * 60 * 24));
+                        
+                        return (
+                          <div key={withdrawal.id} className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+                            <div className="flex items-start justify-between mb-2">
+                              <div className="flex items-center space-x-2">
+                                <FiClock className="h-4 w-4 text-yellow-600" />
+                                <span className="text-xs font-semibold text-yellow-800 uppercase">Pending</span>
+                              </div>
+                              <span className="text-sm font-bold text-gray-900">
+                                ₹{withdrawal.amount.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                              </span>
+                            </div>
+                            <p className="text-xs text-gray-600 mb-1">
+                              Requested on: {new Date(withdrawal.initiatedDate).toLocaleDateString('en-IN', { 
+                                day: '2-digit', 
+                                month: 'short', 
+                                year: 'numeric' 
+                              })}
+                            </p>
+                            <p className="text-xs font-medium text-yellow-800 mb-1">
+                              Your money is currently pending. It will be processed in {daysRemaining} days (Total: 15 days)
+                            </p>
+                            <p className="text-xs text-gray-500">
+                              To: {withdrawal.bankAccount}
+                            </p>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
               </div>
             )}
           </div>
