@@ -156,6 +156,9 @@ const AllTransactions = () => {
                           {tx.bankAccount && (
                             <p className="text-xs text-gray-500 mt-0.5">{tx.bankAccount}</p>
                           )}
+                          {tx.type === 'debit' && tx.status === 'pending' && (
+                            <p className="text-xs text-amber-600 mt-1">Will be received in 30 days</p>
+                          )}
                         </div>
                         <div className="text-right flex-shrink-0 ml-4">
                           <p className={`text-sm font-semibold ${tx.type === 'credit' ? 'text-green-600' : 'text-red-600'}`}>

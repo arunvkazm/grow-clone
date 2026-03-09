@@ -8,6 +8,9 @@ import GrowwLogo from '../components/common/GrowwLogo';
 import Footer from '../components/layout/Footer';
 import toast from 'react-hot-toast';
 
+const BANK_ACCOUNT = '1576104000101981';
+const BANK_DISPLAY = 'STATE BANK OF INDIA ....1981';
+
 const Balance = () => {
   const { user } = useAuth();
   const { addTransaction } = useTransactions();
@@ -25,8 +28,8 @@ const Balance = () => {
 
   // Calculate total pending withdrawal amount
   const totalPendingAmount = pendingWithdrawals.reduce((sum, withdrawal) => sum + withdrawal.amount, 0);
-  // Withdrawable balance is cash balance (money is not deducted until processed after 15 days)
-  const withdrawableBalance = cashBalance;
+  // Withdrawable balance = full Stocks, F&O balance (including initial ₹128 Cr)
+  const withdrawableBalance = balance;
 
   const formatLargeCurrency = (amount) => {
     // Format in Indian number system (15,00,00,000 format)
@@ -172,7 +175,7 @@ const Balance = () => {
       return;
     }
 
-    if (withdrawValue > cashBalance) {
+    if (withdrawValue > balance) {
       toast.error('Insufficient balance.');
       return;
     }
@@ -192,17 +195,18 @@ const Balance = () => {
         amount: withdrawValue,
         status: 'pending',
         initiatedDate: new Date().toISOString(),
-        expectedDate: new Date(Date.now() + 15 * 24 * 60 * 60 * 1000).toISOString(), // 15 days from now
-        bankAccount: 'STATE BANK OF INDIA ....1640'
+        expectedDate: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString(), // 30 days from now
+        bankAccount: BANK_DISPLAY
       };
       
       setPendingWithdrawals([...pendingWithdrawals, newPendingWithdrawal]);
-      setCashBalance(cashBalance - withdrawValue);
+      const newCashBalance = Math.max(0, cashBalance - withdrawValue);
+      setCashBalance(newCashBalance);
       setBalance(balance - withdrawValue);
       setWithdrawAmount('');
       
-      addTransaction({ type: 'debit', amount: withdrawValue, status: 'pending', description: 'Withdrawal' });
-      toast.success(`₹${formatAmountWithDecimals(withdrawValue)} withdrawal request submitted! Will be credited to your bank in 15 days.`);
+      addTransaction({ type: 'debit', amount: withdrawValue, status: 'pending', description: 'Withdrawal', bankAccount: BANK_DISPLAY });
+      toast.success('Your withdrawal is successful! Payment will be received in 30 days.');
       setIsProcessing(false);
     }, 1500);
   };
@@ -425,7 +429,7 @@ const Balance = () => {
                       </div>
                       <div>
                         <p className="text-sm font-medium text-gray-900">STATE BANK OF INDIA</p>
-                        <p className="text-xs text-gray-500">....1640</p>
+                        <p className="text-xs text-gray-500">....{BANK_ACCOUNT.slice(-4)}</p>
                       </div>
                     </div>
                     <FiArrowRight className="h-5 w-5 text-gray-400 flex-shrink-0" />
@@ -513,7 +517,7 @@ const Balance = () => {
                             You have {pendingWithdrawals.length} pending withdrawal{pendingWithdrawals.length > 1 ? 's' : ''}
                           </p>
                           <p className="text-xs text-yellow-700">
-                            ₹{totalPendingAmount.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} is pending. Your money will be processed in 15 days.
+                            ₹{totalPendingAmount.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} is pending. Will be received in 30 days.
                           </p>
                         </div>
                       </div>
@@ -530,7 +534,7 @@ const Balance = () => {
                       </div>
                       <div>
                         <p className="text-sm font-medium text-gray-900">STATE BANK OF INDIA</p>
-                        <p className="text-xs text-gray-500">....1640</p>
+                        <p className="text-xs text-gray-500">....{BANK_ACCOUNT.slice(-4)}</p>
                       </div>
                     </div>
                     <FiArrowRight className="h-5 w-5 text-gray-400 flex-shrink-0" />
@@ -578,7 +582,7 @@ const Balance = () => {
                               })}
                             </p>
                             <p className="text-xs font-medium text-yellow-800 mb-1">
-                              Your money is currently pending. It will be processed in {daysRemaining} days (Total: 15 days)
+                              Will be received in 30 days. Processing in {daysRemaining} days
                             </p>
                             <p className="text-xs text-gray-500">
                               To: {withdrawal.bankAccount}

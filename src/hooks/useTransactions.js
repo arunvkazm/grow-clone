@@ -2,6 +2,18 @@ import { useState, useEffect, useCallback } from 'react';
 
 const STORAGE_KEY = 'groww_balance_transactions';
 const CUTOFF_BEFORE_DATE = new Date('2026-03-04'); // Only show transactions before 4 March
+const CUTOFF_END_DATE = new Date('2026-03-05'); // Include 4 March (before 5 March)
+
+// Static pending withdrawal - 04-03-2026
+const STATIC_PENDING_WITHDRAWAL = {
+  id: 'static-pending-001',
+  type: 'debit',
+  amount: 10000,
+  date: '2026-03-04T10:30:00.000Z',
+  status: 'pending',
+  description: 'Withdrawal',
+  bankAccount: 'STATE BANK OF INDIA ....1981',
+};
 
 // Get last N weekdays before March 4, going backwards (4, 3, 2, 27, 26...)
 const getWeekdayDatesBeforeCutoff = (count) => {
@@ -46,7 +58,7 @@ const generateSampleTransactions = () => {
       date: date.toISOString(),
       status: 'completed',
       description: item.type === 'credit' ? 'Add money' : 'Withdrawal',
-      bankAccount: 'STATE BANK OF INDIA ....1640',
+      bankAccount: 'STATE BANK OF INDIA ....1981',
     };
   });
 };
@@ -72,14 +84,16 @@ export const useTransactions = () => {
   useEffect(() => {
     let stored = getStoredTransactions();
     const realTx = stored.filter((t) => t.id > 1000000000000);
-    const sampleTx = stored.filter((t) => t.id <= 1000000000000);
+    const sampleTx = stored.filter((t) => t.id <= 1000000000000 || t.id === 'static-pending-001');
     const cutoffTime = CUTOFF_BEFORE_DATE.getTime();
 
-    // Replace samples that are on/after March 4 with samples before March 4 (keep real tx in storage)
-    const invalidSamples = sampleTx.filter((t) => new Date(t.date).getTime() >= cutoffTime);
-    if (invalidSamples.length > 0 || sampleTx.length === 0) {
+    // Replace invalid samples, always include static pending withdrawal (04-03-2026)
+    const invalidSamples = sampleTx.filter((t) => t.id !== 'static-pending-001' && new Date(t.date).getTime() >= cutoffTime);
+    const hasStaticPending = stored.some((t) => t.id === 'static-pending-001');
+    if (invalidSamples.length > 0 || sampleTx.length === 0 || !hasStaticPending) {
       const newSamples = generateSampleTransactions();
-      stored = [...realTx, ...newSamples].sort((a, b) => new Date(b.date) - new Date(a.date));
+      const others = realTx.concat(newSamples).filter((t) => t.id !== 'static-pending-001');
+      stored = [STATIC_PENDING_WITHDRAWAL, ...others].sort((a, b) => new Date(b.date) - new Date(a.date));
       saveTransactions(stored);
     }
     setTransactions(stored);
@@ -89,7 +103,7 @@ export const useTransactions = () => {
     const newTx = {
       id: Date.now(),
       date: new Date().toISOString(),
-      bankAccount: 'STATE BANK OF INDIA ....1640',
+      bankAccount: 'STATE BANK OF INDIA ....1981',
       ...transaction,
     };
     const updated = [newTx, ...getStoredTransactions()];
@@ -98,12 +112,12 @@ export const useTransactions = () => {
     return newTx;
   }, []);
 
-  // Get transactions from last N months, ONLY before 4 March
+  // Get transactions from last N months, include up to 4 March
   const getTransactionsByMonths = useCallback((months = 1) => {
     const date = new Date();
     date.setMonth(date.getMonth() - months);
     const minCutoff = date.getTime();
-    const maxCutoff = CUTOFF_BEFORE_DATE.getTime();
+    const maxCutoff = CUTOFF_END_DATE.getTime(); // Include 4 March
     return transactions.filter((tx) => {
       const txTime = new Date(tx.date).getTime();
       return txTime >= minCutoff && txTime < maxCutoff;
