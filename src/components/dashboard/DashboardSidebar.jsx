@@ -69,7 +69,7 @@ const DashboardSidebar = () => {
     <div className="sticky top-20 space-y-6">
       {/* Your Investments */}
         <h3 className="text-lg font-bold mb-4" style={{ color: '#44475b' }}>Your investments</h3>
-      <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-4 w-[340px]">
+      <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-4 w-full max-w-full max-w-[340px]">
         <div className="space-y-4">
           {/* Portfolio Value */}
           <div>
@@ -119,7 +119,7 @@ const DashboardSidebar = () => {
 
       {/* Products & Tools */}
         <h3 className="text-lg font-bold mb-4" style={{ color: '#44475b' }}>Products & Tools</h3>
-      <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-1 w-[340px]">
+      <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-1 w-full max-w-[340px]">
         <div className="space-y-0">
           {products.map((product, index) => {
             const Icon = product.icon;
@@ -148,7 +148,7 @@ const DashboardSidebar = () => {
 
       {/* Trading Screens */}
         <h3 className="text-lg font-bold mb-4" style={{ color: '#44475b' }}>Trading Screens</h3>
-      <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-1 w-[340px]">
+      <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-1 w-full max-w-[340px]">
         <div className="space-y-3">
           {tradingScreens.map((screen, index) => (
             <div key={index} className="flex items-center justify-between p-2 hover:bg-gray-50 rounded-lg cursor-pointer">

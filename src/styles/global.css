@@ -22,6 +22,10 @@
 }
 
 /* Custom styles */
+html {
+  overflow-x: hidden;
+}
+
 body {
   font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   color: #1f2937;
@@ -29,6 +33,12 @@ body {
   -moz-osx-font-smoothing: grayscale;
   font-feature-settings: 'kern' 1;
   text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+/* Ensure dropdowns/modals are not clipped */
+header, nav, [role="banner"] {
+  overflow: visible !important;
 }
 
 /* Custom scrollbar */
