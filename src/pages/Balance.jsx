@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { FiSearch, FiBell, FiChevronDown, FiArrowRight, FiX, FiClock } from 'react-icons/fi';
 import { useAuth } from '../hooks/useAuth';
+import { useTransactions } from '../hooks/useTransactions';
 import ProfileDropdown from '../components/dashboard/ProfileDropdown';
 import GrowwLogo from '../components/common/GrowwLogo';
 import Footer from '../components/layout/Footer';
@@ -9,6 +10,7 @@ import toast from 'react-hot-toast';
 
 const Balance = () => {
   const { user } = useAuth();
+  const { addTransaction } = useTransactions();
   const location = useLocation();
   const [searchQuery, setSearchQuery] = useState('');
   const [showMoreMenu, setShowMoreMenu] = useState(false);
@@ -33,26 +35,55 @@ const Balance = () => {
 
   const quickAddAmounts = [1000, 5000, 10000];
 
+  const formatAmountWithDecimals = (num) => {
+    return num.toLocaleString('en-IN', { minimumFractionDigits: 0, maximumFractionDigits: 2 });
+  };
+
   const handleQuickAdd = (value) => {
     const currentAmount = parseFloat(amount.replace(/,/g, '')) || 0;
     const newAmount = currentAmount + value;
-    setAmount(newAmount.toLocaleString('en-IN'));
+    setAmount(formatAmountWithDecimals(newAmount));
   };
 
   const handleAmountChange = (e) => {
     let value = e.target.value;
-    // Remove ₹ symbol and commas
-    value = value.replace(/[₹,]/g, '');
-    // Keep only numbers
-    value = value.replace(/[^0-9]/g, '');
+    // Remove ₹ symbol, commas and spaces
+    value = value.replace(/[₹,\s]/g, '');
+    // Allow only numbers and one decimal point
+    value = value.replace(/[^0-9.]/g, '');
+    // Ensure only one decimal point - keep first
+    let parts = value.split('.');
+    if (parts.length > 2) {
+      value = parts[0] + '.' + parts.slice(1).join('');
+      parts = value.split('.');
+    }
+    // Limit to 2 decimal places
+    if (parts.length === 2 && parts[1].length > 2) {
+      value = parts[0] + '.' + parts[1].substring(0, 2);
+    }
     
-    if (value) {
-      const numValue = parseFloat(value);
-      if (numValue > 0) {
-        setAmount(numValue.toLocaleString('en-IN'));
+    if (value === '' || value === '.') {
+      setAmount('');
+      return;
+    }
+    
+    // Preserve trailing decimal point so user can type "12056." then "67"
+    const hasTrailingDot = value.endsWith('.');
+    if (hasTrailingDot) {
+      const numPart = parseFloat(value.slice(0, -1));
+      if (!isNaN(numPart) && numPart > 0) {
+        setAmount(formatAmountWithDecimals(numPart) + '.');
       } else {
-        setAmount('');
+        setAmount(value);
       }
+      return;
+    }
+    
+    const numValue = parseFloat(value);
+    if (!isNaN(numValue) && numValue > 0) {
+      setAmount(formatAmountWithDecimals(numValue));
+    } else if (numValue === 0) {
+      setAmount('');
     } else {
       setAmount('');
     }
@@ -60,21 +91,44 @@ const Balance = () => {
 
   const handleWithdrawAmountChange = (e) => {
     let value = e.target.value;
-    // Remove ₹ symbol and commas
-    value = value.replace(/[₹,]/g, '');
-    // Keep only numbers
-    value = value.replace(/[^0-9]/g, '');
+    value = value.replace(/[₹,\s]/g, '');
+    value = value.replace(/[^0-9.]/g, '');
+    let parts = value.split('.');
+    if (parts.length > 2) {
+      value = parts[0] + '.' + parts.slice(1).join('');
+      parts = value.split('.');
+    }
+    if (parts.length === 2 && parts[1].length > 2) {
+      value = parts[0] + '.' + parts[1].substring(0, 2);
+    }
     
-    if (value) {
-      const numValue = parseFloat(value);
-      if (numValue > 0 && numValue <= withdrawableBalance) {
-        setWithdrawAmount(numValue.toLocaleString('en-IN'));
-      } else if (numValue > withdrawableBalance) {
-        setWithdrawAmount(withdrawableBalance.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
+    if (value === '' || value === '.') {
+      setWithdrawAmount('');
+      return;
+    }
+    
+    const hasTrailingDot = value.endsWith('.');
+    if (hasTrailingDot) {
+      const numPart = parseFloat(value.slice(0, -1));
+      if (!isNaN(numPart) && numPart > 0 && numPart <= withdrawableBalance) {
+        setWithdrawAmount(formatAmountWithDecimals(numPart) + '.');
+      } else if (numPart > withdrawableBalance) {
+        setWithdrawAmount(formatAmountWithDecimals(withdrawableBalance));
         toast.error('Cannot withdraw more than available balance');
       } else {
-        setWithdrawAmount('');
+        setWithdrawAmount(value);
       }
+      return;
+    }
+    
+    const numValue = parseFloat(value);
+    if (!isNaN(numValue) && numValue > 0 && numValue <= withdrawableBalance) {
+      setWithdrawAmount(formatAmountWithDecimals(numValue));
+    } else if (numValue > withdrawableBalance) {
+      setWithdrawAmount(formatAmountWithDecimals(withdrawableBalance));
+      toast.error('Cannot withdraw more than available balance');
+    } else if (numValue > 0) {
+      setWithdrawAmount(formatAmountWithDecimals(numValue));
     } else {
       setWithdrawAmount('');
     }
@@ -104,7 +158,8 @@ const Balance = () => {
       setBalance(newBalance);
       setAmount('100');
       
-      toast.success(`₹${amountValue.toLocaleString('en-IN')} added successfully!`);
+      addTransaction({ type: 'credit', amount: amountValue, status: 'completed', description: 'Add money' });
+      toast.success(`₹${formatAmountWithDecimals(amountValue)} added successfully!`);
       setIsProcessing(false);
     }, 1500);
   };
@@ -117,9 +172,8 @@ const Balance = () => {
       return;
     }
 
-    // Check if total pending + new withdrawal exceeds available balance
-    if (withdrawValue + totalPendingAmount > cashBalance) {
-      toast.error('Insufficient balance. You have pending withdrawals.');
+    if (withdrawValue > cashBalance) {
+      toast.error('Insufficient balance.');
       return;
     }
 
@@ -132,7 +186,7 @@ const Balance = () => {
     
     // Simulate API call
     setTimeout(() => {
-      // Create pending withdrawal (money is NOT deducted immediately)
+      // Create pending withdrawal and deduct from balance immediately
       const newPendingWithdrawal = {
         id: Date.now(),
         amount: withdrawValue,
@@ -143,9 +197,12 @@ const Balance = () => {
       };
       
       setPendingWithdrawals([...pendingWithdrawals, newPendingWithdrawal]);
+      setCashBalance(cashBalance - withdrawValue);
+      setBalance(balance - withdrawValue);
       setWithdrawAmount('');
       
-      toast.success(`₹${withdrawValue.toLocaleString('en-IN')} withdrawal request submitted! Your money is now pending and will be processed in 15 days.`);
+      addTransaction({ type: 'debit', amount: withdrawValue, status: 'pending', description: 'Withdrawal' });
+      toast.success(`₹${formatAmountWithDecimals(withdrawValue)} withdrawal request submitted! Will be credited to your bank in 15 days.`);
       setIsProcessing(false);
     }, 1500);
   };
@@ -276,10 +333,13 @@ const Balance = () => {
             </div>
 
             {/* All Transactions Card */}
-            <Link to="/fno-pnl-report" className="bg-white border border-gray-200 rounded-lg p-4 cursor-pointer hover:bg-gray-50 transition-colors block">
+            <Link to="/transactions" className="bg-white border border-gray-200 rounded-lg p-4 cursor-pointer hover:bg-gray-50 transition-colors block">
               <div className="flex items-center justify-between">
                 <span className="text-sm font-medium text-gray-900">All transactions</span>
-                <FiArrowRight className="h-5 w-5 text-gray-400" />
+                <span className="flex items-center text-sm font-medium text-primary-600">
+                  See all
+                  <FiArrowRight className="h-5 w-5 ml-1" />
+                </span>
               </div>
             </Link>
           </div>
@@ -312,14 +372,24 @@ const Balance = () => {
 
             {activeTab === 'add' ? (
               <div className="space-y-6">
-                {/* Amount Display */}
+                {/* Amount Input */}
                 <div>
-                  <p className="text-4xl font-bold text-gray-900 mb-6">
-                    ₹{amount || '100'}
-                  </p>
+                  <label className="block text-sm text-gray-600 mb-2">Enter amount to add</label>
+                  <div className="relative mb-4">
+                    <span className="absolute left-0 text-2xl font-bold text-gray-900 pointer-events-none pl-4 pt-3">₹</span>
+                    <input
+                      type="text"
+                      value={amount || ''}
+                      onChange={handleAmountChange}
+                      onFocus={(e) => e.target.select()}
+                      placeholder="100"
+                      className="w-full text-2xl font-bold text-gray-900 border border-gray-300 rounded-lg pl-12 pr-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                      inputMode="decimal"
+                    />
+                  </div>
                   
                   {/* Quick Add Buttons */}
-                  <div className="flex space-x-3 mb-6">
+                  <div className="flex space-x-3">
                     {quickAddAmounts.map((value) => (
                       <button
                         key={value}
@@ -382,7 +452,7 @@ const Balance = () => {
                   <div className="mb-4">
                     <p className="text-xs text-gray-600 mb-2">Available to withdraw</p>
                     <p className="text-4xl font-bold text-gray-900 mb-6">
-                      ₹{withdrawableBalance.toLocaleString('en-IN', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}
+                      ₹{formatAmountWithDecimals(withdrawableBalance)}
                     </p>
                   </div>
                   
@@ -408,7 +478,7 @@ const Balance = () => {
                           }}
                           placeholder="0"
                           className="w-full text-2xl font-bold text-gray-900 border border-gray-300 rounded-lg pl-12 pr-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-                          inputMode="numeric"
+                          inputMode="decimal"
                         />
                       </div>
                       
@@ -421,7 +491,7 @@ const Balance = () => {
                               key={value}
                               onClick={() => {
                                 const newAmount = Math.min(value, withdrawableBalance);
-                                setWithdrawAmount(newAmount.toLocaleString('en-IN'));
+                                setWithdrawAmount(formatAmountWithDecimals(newAmount));
                               }}
                               className="flex-1 px-4 py-2 text-sm font-medium text-gray-700 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
                             >

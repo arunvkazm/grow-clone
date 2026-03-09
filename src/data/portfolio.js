@@ -1,6 +1,6 @@
 // src/data/portfolio.js
 export const portfolioData = {
-  totalInvestment: 10000000000, // ₹1000 Cr invested
+  totalInvestment: 150891058, // ₹15.09 Cr invested (for -0.59% loss)
   currentValue: 150000000, // ₹15 Cr current value
   holdings: [
     {

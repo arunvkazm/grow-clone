@@ -74,7 +74,7 @@ const DashboardSidebar = () => {
           {/* Portfolio Value */}
           <div>
             <div className="flex items-center justify-between mb-2">
-              <p className="text-xs text-gray-600">Portfolio Value</p>
+              <p className="text-xs text-gray-600">Portfolio Valuess</p>
             </div>
             <p className="text-2xl font-bold text-gray-600 mb-1">
             ₹{formatLargeCurrency(currentValue)}

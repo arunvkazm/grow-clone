@@ -6,6 +6,7 @@ import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
 import Home from './pages/Home';
 import Stocks from './pages/Stocks';
+import FuturesAndOptions from './pages/FuturesAndOptions';
 import StockDetail from './pages/StockDetail';
 import MutualFunds from './pages/MutualFunds';
 import MutualFundDetail from './pages/MutualFundDetail';
@@ -18,6 +19,7 @@ import Watchlist from './pages/Watchlist';
 import Orders from './pages/Orders';
 import Balance from './pages/Balance';
 import FNOPnLReport from './pages/FNOPnLReport';
+import AllTransactions from './pages/AllTransactions';
 import News from './pages/News';
 import IPOs from './pages/IPOs';
 import ProtectedRoute from './components/common/ProtectedRoute';
@@ -39,6 +41,13 @@ function App() {
           <>
             <Navbar />
             <Stocks />
+            <Footer />
+          </>
+        } />
+        <Route path="/futures-and-options" element={
+          <>
+            <Navbar />
+            <FuturesAndOptions />
             <Footer />
           </>
         } />
@@ -114,6 +123,11 @@ function App() {
         <Route path="/fno-pnl-report" element={
           <ProtectedRoute>
             <FNOPnLReport />
+          </ProtectedRoute>
+        } />
+        <Route path="/transactions" element={
+          <ProtectedRoute>
+            <AllTransactions />
           </ProtectedRoute>
         } />
         <Route path="/watchlist" element={
