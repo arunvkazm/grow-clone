@@ -90,13 +90,13 @@ const Holdings = () => {
 
       <MarketIndices />
 
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
-          <div className="lg:col-span-3">
+      <main className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-6">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 sm:gap-6">
+          <div className="lg:col-span-3 min-w-0">
             {/* Holdings Summary Section */}
-            <div className="bg-white rounded-lg border border-gray-200 mb-4">
-              <div className="px-4 py-3 border-b border-gray-200 flex items-center justify-between">
-                <div className="flex items-center space-x-3">
+            <div className="bg-white rounded-lg border border-gray-200 mb-4 overflow-hidden">
+              <div className="px-3 sm:px-4 py-3 border-b border-gray-200 flex flex-wrap items-center justify-between gap-2">
+                <div className="flex items-center space-x-2 sm:space-x-3">
                   <button
                     onClick={() => setIsExpanded(!isExpanded)}
                     className="flex items-center space-x-2"
@@ -113,7 +113,7 @@ const Holdings = () => {
                   </button>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <button className="px-3 py-1.5 text-sm font-medium text-gray-700 hover:bg-gray-100 rounded">
+                  <button className="px-2 sm:px-3 py-1.5 text-xs sm:text-sm font-medium text-gray-700 hover:bg-gray-100 rounded">
                     Analyse
                   </button>
                   <button className="p-1 hover:bg-gray-100 rounded">
@@ -123,8 +123,8 @@ const Holdings = () => {
               </div>
               
               {isExpanded && (
-                <div className="px-4 py-4">
-                  <div className="grid grid-cols-4 gap-4">
+                <div className="px-3 sm:px-4 py-4">
+                  <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
                     <div>
                       <p className="text-xs text-gray-600 mb-1">Current value</p>
                       <p className="text-sm font-semibold text-gray-900">₹{holdingsSummary.currentValue.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
