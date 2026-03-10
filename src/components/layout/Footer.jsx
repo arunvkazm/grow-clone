@@ -41,7 +41,7 @@ const Footer = () => {
       'Top Losers Stocks',
       '52 Weeks Low Stocks',
       'IREDA',
-      'State Bank of India',
+      'IDBI Bank',
       'Adani Power',
       'CDSL'
     ],

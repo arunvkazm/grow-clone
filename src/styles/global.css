@@ -60,6 +60,15 @@ header, nav, [role="banner"] {
   background: #94a3b8;
 }
 
+/* Hide scrollbar for horizontal scroll on mobile */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
 /* Chart tooltip styles */
 .recharts-tooltip-wrapper {
   box-shadow: var(--shadow-card-hover) !important;

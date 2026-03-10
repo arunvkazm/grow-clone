@@ -1,9 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { 
-  FiTrendingUp, 
-  FiTrendingDown, 
-  FiDollarSign, 
+import {
+  FiTrendingUp,
+  FiTrendingDown,
+  FiDollarSign,
   FiTrendingUp as FiUp,
   FiVolume2,
   FiFileText,
@@ -29,27 +29,27 @@ const DashboardSidebar = () => {
   ];
 
   const tradingScreens = [
-    { 
-      sentiment: 'Bullish', 
-      name: 'Resistance breakouts', 
+    {
+      sentiment: 'Bullish',
+      name: 'Resistance breakouts',
       type: 'bullish',
       image: 'https://storage.googleapis.com/groww-static-content/app-assets/stocks/stocksIcons/stocks_near_breakout_light.webp'
     },
-    { 
-      sentiment: 'Bullish', 
-      name: 'MACD above signal line', 
+    {
+      sentiment: 'Bullish',
+      name: 'MACD above signal line',
       type: 'bullish',
       image: 'https://storage.googleapis.com/groww-static-content/app-assets/stocks/stocksIcons/macd_above_signal_line_light.webp'
     },
-    { 
-      sentiment: 'Bearish', 
-      name: 'RSI overbought', 
+    {
+      sentiment: 'Bearish',
+      name: 'RSI overbought',
       type: 'bearish',
       image: 'https://storage.googleapis.com/groww-static-content/app-assets/stocks/stocksIcons/overbought_with_high_volume_light.webp'
     },
-    { 
-      sentiment: 'Bullish', 
-      name: 'RSI oversold', 
+    {
+      sentiment: 'Bullish',
+      name: 'RSI oversold',
       type: 'bullish',
       image: 'https://storage.googleapis.com/groww-static-content/app-assets/stocks/stocksIcons/oversold_with_high_volume_light.webp'
     },
@@ -68,7 +68,7 @@ const DashboardSidebar = () => {
   return (
     <div className="sticky top-20 space-y-6">
       {/* Your Investments */}
-        <h3 className="text-lg font-bold mb-4" style={{ color: '#44475b' }}>Your investments</h3>
+      <h3 className="text-lg font-bold mb-4" style={{ color: '#44475b' }}>Your investments</h3>
       <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-4 w-full max-w-full max-w-[340px]">
         <div className="space-y-4">
           {/* Portfolio Value */}
@@ -77,7 +77,7 @@ const DashboardSidebar = () => {
               <p className="text-xs text-gray-600">Portfolio Valuess</p>
             </div>
             <p className="text-2xl font-bold text-gray-600 mb-1">
-            ₹{formatLargeCurrency(currentValue)}
+              ₹{formatLargeCurrency(currentValue)}
             </p>
             <div className={`flex items-center space-x-1 ${totalGain >= 0 ? 'text-green-600' : 'text-red-600'}`}>
               {totalGain >= 0 ? (
@@ -101,10 +101,12 @@ const DashboardSidebar = () => {
 
           {/* Holdings Count */}
           <div className="pt-2 border-t border-gray-200">
-            <div className="flex items-center justify-between">
-              <p className="text-xs text-gray-600">Holdings</p>
-              <p className="text-sm font-semibold text-gray-900">{portfolioData.holdings.length}</p>
-            </div>
+            <Link to="/holdings">
+              <div className="flex items-center justify-between">
+                <p className="text-xs text-gray-600">Holdings</p>
+                <p className="text-sm font-semibold text-gray-900">{portfolioData.holdings.length}</p>
+              </div>
+            </Link>
           </div>
 
           {/* View All Link */}
@@ -118,7 +120,7 @@ const DashboardSidebar = () => {
       </div>
 
       {/* Products & Tools */}
-        <h3 className="text-lg font-bold mb-4" style={{ color: '#44475b' }}>Products & Tools</h3>
+      <h3 className="text-lg font-bold mb-4" style={{ color: '#44475b' }}>Products & Tools</h3>
       <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-1 w-full max-w-[340px]">
         <div className="space-y-0">
           {products.map((product, index) => {
@@ -147,24 +149,23 @@ const DashboardSidebar = () => {
       </div>
 
       {/* Trading Screens */}
-        <h3 className="text-lg font-bold mb-4" style={{ color: '#44475b' }}>Trading Screens</h3>
+      <h3 className="text-lg font-bold mb-4" style={{ color: '#44475b' }}>Trading Screens</h3>
       <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-1 w-full max-w-[340px]">
         <div className="space-y-3">
           {tradingScreens.map((screen, index) => (
             <div key={index} className="flex items-center justify-between p-2 hover:bg-gray-50 rounded-lg cursor-pointer">
               <div className="flex items-center space-x-3 flex-1">
-                <span className={`text-xs px-2 py-1 rounded-full font-medium ${
-                  screen.type === 'bullish' 
-                    ? 'bg-green-100 text-green-700' 
-                    : 'bg-orange-100 text-orange-700'
-                }`}>
+                <span className={`text-xs px-2 py-1 rounded-full font-medium ${screen.type === 'bullish'
+                  ? 'bg-green-100 text-green-700'
+                  : 'bg-orange-100 text-orange-700'
+                  }`}>
                   {screen.sentiment}
                 </span>
                 <span className="text-sm text-gray-700">{screen.name}</span>
               </div>
               <div className="w-12 h-8 rounded flex items-center justify-center flex-shrink-0 overflow-hidden bg-gray-100">
-                <img 
-                  src={screen.image} 
+                <img
+                  src={screen.image}
                   alt={screen.name}
                   className="w-full h-full object-contain"
                 />

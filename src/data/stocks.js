@@ -94,14 +94,14 @@ export const stocks = [
   {
     id: 8,
     symbol: 'SBIN',
-    name: 'State Bank of India',
+    name: 'IDBI Bank',
     price: 567.80,
     change: 9.45,
     changePercent: 1.69,
     marketCap: '₹5.1L Cr',
     pe: 15.6,
     sector: 'Banking',
-    description: 'State Bank of India is an Indian multinational public sector bank and financial services statutory body headquartered in Mumbai.',
+    description: 'IDBI Bank is an Indian multinational public sector bank and financial services statutory body headquartered in Mumbai.',
     volume: '38.9M'
   },
   {

@@ -1,21 +1,20 @@
 // src/pages/Orders.jsx
 import React, { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { FiFilter, FiDownload, FiClock, FiCheckCircle, FiXCircle, FiBarChart2, FiSearch, FiBell, FiChevronDown } from 'react-icons/fi';
 import { useAuth } from '../hooks/useAuth';
 import MarketIndices from '../components/dashboard/MarketIndices';
 import DashboardSidebar from '../components/dashboard/DashboardSidebar';
 import ProfileDropdown from '../components/dashboard/ProfileDropdown';
 import GrowwLogo from '../components/common/GrowwLogo';
+import SecondaryNav from '../components/dashboard/SecondaryNav';
 import Footer from '../components/layout/Footer';
 
 const Orders = () => {
   const { user } = useAuth();
-  const location = useLocation();
   const [filter, setFilter] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [showMoreMenu, setShowMoreMenu] = useState(false);
-  const isActive = location.pathname === '/orders';
 
   // Sample order data
   const orders = [
@@ -171,26 +170,7 @@ const Orders = () => {
           </div>
 
           {/* Secondary Nav Links */}
-          <div className="h-12 flex items-center justify-between border-t border-gray-100">
-            <div className="flex items-center space-x-6">
-              <Link to="/explore" className="text-sm font-medium text-gray-700 hover:text-gray-900">Explore</Link>
-              <Link to="/holdings" className="text-sm font-medium text-gray-700 hover:text-gray-900">Holdings</Link>
-              <Link to="/positions" className="text-sm font-medium text-gray-700 hover:text-gray-900">Positions</Link>
-              <Link to="/orders" className={`text-sm font-medium pb-3 ${isActive ? 'text-gray-900 border-b-2 border-gray-900' : 'text-gray-700 hover:text-gray-900'}`}>
-                Orders
-              </Link>
-              <Link to="/watchlist" className="text-sm font-medium text-gray-700 hover:text-gray-900">Watchlist</Link>
-            </div>
-            <div className="flex items-center space-x-3">
-              <button className="flex items-center space-x-2 px-3 py-1.5 text-sm font-medium text-gray-700 hover:text-gray-900 border border-gray-300 rounded-lg">
-                <span>0</span>
-                <span>Terminal</span>
-              </button>
-              <button className="px-3 py-1.5 text-sm font-medium text-gray-700 hover:text-gray-900 border border-gray-300 rounded-lg">
-                915
-              </button>
-            </div>
-          </div>
+          <SecondaryNav />
         </div>
       </header>
 

@@ -7,8 +7,8 @@ const MarketIndices = () => {
   const [hoveredIndex, setHoveredIndex] = useState(null);
   
   const indices = [
-    { name: 'NIFTY', value: '25,585.50', change: -108.85, changePercent: -0.42 },
-    { name: 'NIFTY', value: '25,585.50', change: -108.85, changePercent: -0.42 },
+    { name: 'NIFTY', value: '24,261.60', change: -108.85, changePercent: -0.42 },
+    { name: 'SENSEX', value: '79,856.40', change: -350.25, changePercent: -0.44 },
     { name: 'MIDCPNIFTY', value: '13,655.20', change: -42.65, changePercent: -0.31 },
     { name: 'FINNIFTY', value: '27,518.00', change: 0, changePercent: 0 }
   ];
@@ -19,9 +19,9 @@ const MarketIndices = () => {
   ];
 
   return (
-    <div className="bg-white border-b border-gray-200">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-        <div className="flex items-center justify-center space-x-6">
+    <div className="bg-white border-b border-gray-200 overflow-hidden">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 sm:py-4">
+        <div className="flex items-center justify-start sm:justify-center gap-3 sm:gap-6 overflow-x-auto scrollbar-hide pb-2 sm:pb-0 -mx-4 px-4 sm:mx-0 sm:px-0">
           {indices.map((index, idx) => {
             const isPositive = index.change >= 0;
             const isLast = idx === indices.length - 1;
@@ -30,18 +30,18 @@ const MarketIndices = () => {
             return (
               <div 
                 key={`${index.name}-${idx}`} 
-                className="relative flex items-center space-x-3 min-w-fit whitespace-nowrap"
+                className="relative flex items-center gap-2 sm:gap-3 min-w-[140px] sm:min-w-fit flex-shrink-0 whitespace-nowrap"
                 onMouseEnter={() => setHoveredIndex(idx)}
                 onMouseLeave={() => setHoveredIndex(null)}
               >
-                <button className="flex items-center space-x-3 hover:bg-gray-50 px-2 py-1 rounded transition-colors">
-                  <div className="flex items-center space-x-2">
+                <button className="flex items-center gap-1 sm:gap-3 hover:bg-gray-50 px-2 py-1.5 rounded transition-colors">
+                  <div className="flex items-center gap-2">
                     <p className="text-xs font-medium" style={{ color: '#04b488' }}>{index.name}</p>
-                    <p className="text-sm font-semibold text-gray-900">{index.value}</p>
+                    <p className="text-xs sm:text-sm font-semibold text-gray-900">{index.value}</p>
                   </div>
                   {!(index.change === 0 && index.changePercent === 0) && (
-                    <div className={`flex items-center space-x-1 ${isPositive ? 'text-green-600' : 'text-red-600'}`}>
-                      <span className="text-xs font-medium">
+                    <div className={`flex items-center ${isPositive ? 'text-green-600' : 'text-red-600'}`}>
+                      <span className="text-[10px] sm:text-xs font-medium">
                         {index.change === 0 ? '+' : (isPositive ? '+' : '')}{index.change.toFixed(2)} ({index.changePercent === 0 ? '+' : (isPositive ? '+' : '')}{index.changePercent.toFixed(2)}%)
                       </span>
                     </div>

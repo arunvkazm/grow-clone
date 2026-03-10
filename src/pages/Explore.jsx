@@ -10,6 +10,7 @@ import MostBoughtETFs from '../components/dashboard/MostBoughtETFs';
 import GrowwETFs from '../components/dashboard/GrowwETFs';
 import StocksInNews from '../components/dashboard/StocksInNews';
 import DashboardSidebar from '../components/dashboard/DashboardSidebar';
+import SecondaryNav from '../components/dashboard/SecondaryNav';
 import YourInvestments from '../components/dashboard/YourInvestments';
 import Footer from '../components/layout/Footer';
 import { useAuth } from '../hooks/useAuth';
@@ -86,34 +87,7 @@ const Explore = () => {
           </div>
 
           {/* Secondary Nav Links */}
-          <div className="h-12 flex items-center justify-between border-t border-gray-100">
-            <div className="flex items-center space-x-6">
-              <Link to="/explore" className="text-sm font-medium text-gray-900 border-b-2 border-gray-900 pb-3">
-                Explore
-              </Link>
-              <Link to="/holdings" className="text-sm font-medium text-gray-700 hover:text-gray-900">
-                Holdings
-              </Link>
-              <Link to="/positions" className="text-sm font-medium text-gray-700 hover:text-gray-900">
-                Positions
-              </Link>
-              <Link to="/orders" className="text-sm font-medium text-gray-700 hover:text-gray-900">
-                Orders
-              </Link>
-              <Link to="/watchlist" className="text-sm font-medium text-gray-700 hover:text-gray-900">
-                Watchlist
-              </Link>
-            </div>
-            <div className="flex items-center space-x-3">
-              <button className="flex items-center space-x-2 px-3 py-1.5 text-sm font-medium text-gray-700 hover:text-gray-900 border border-gray-300 rounded-lg">
-                <span>0</span>
-                <span>Terminal</span>
-              </button>
-              <button className="px-3 py-1.5 text-sm font-medium text-gray-700 hover:text-gray-900 border border-gray-300 rounded-lg">
-                915
-              </button>
-            </div>
-          </div>
+          <SecondaryNav />
         </div>
       </header>
 

@@ -20,6 +20,7 @@ import Orders from './pages/Orders';
 import Balance from './pages/Balance';
 import FNOPnLReport from './pages/FNOPnLReport';
 import AllTransactions from './pages/AllTransactions';
+import BankDetails from './pages/BankDetails';
 import News from './pages/News';
 import IPOs from './pages/IPOs';
 import ProtectedRoute from './components/common/ProtectedRoute';
@@ -128,6 +129,11 @@ function App() {
         <Route path="/transactions" element={
           <ProtectedRoute>
             <AllTransactions />
+          </ProtectedRoute>
+        } />
+        <Route path="/bank-details" element={
+          <ProtectedRoute>
+            <BankDetails />
           </ProtectedRoute>
         } />
         <Route path="/watchlist" element={

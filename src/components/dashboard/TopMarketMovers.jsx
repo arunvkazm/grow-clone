@@ -107,7 +107,7 @@ const TopMarketMovers = () => {
       volume: '5,67,89,234'
     },
     { 
-      name: 'State Bank of India', 
+      name: 'IDBI Bank', 
       price: 567.80, 
       change: 9.45, 
       changePercent: 1.69, 

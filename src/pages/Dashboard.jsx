@@ -19,6 +19,7 @@ import DashboardSidebar from '../components/dashboard/DashboardSidebar';
 import YourInvestments from '../components/dashboard/YourInvestments';
 import Footer from '../components/layout/Footer';
 import { useAuth } from '../hooks/useAuth';
+import profileImg from '../assets/profile.jpeg';
 import { Toaster } from 'react-hot-toast';
 
 const Dashboard = () => {
@@ -91,10 +92,8 @@ const Dashboard = () => {
                 </span>
               </button>
               
-              <div className="w-8 h-8 bg-primary-500 rounded-full flex items-center justify-center cursor-pointer">
-                <span className="text-white text-sm font-semibold">
-                  {(user?.name || 'Wasim Anish Khan').charAt(0).toUpperCase()}
-                </span>
+              <div className="w-8 h-8 rounded-full overflow-hidden flex-shrink-0 cursor-pointer border-2 border-primary-500">
+                <img src={profileImg} alt="Profile" className="w-full h-full object-cover" />
               </div>
             </div>
           </div>

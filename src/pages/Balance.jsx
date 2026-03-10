@@ -9,7 +9,7 @@ import Footer from '../components/layout/Footer';
 import toast from 'react-hot-toast';
 
 const BANK_ACCOUNT = '1576104000101981';
-const BANK_DISPLAY = 'STATE BANK OF INDIA ....1981';
+const BANK_DISPLAY = 'IDBI Bank ....1981';
 
 const Balance = () => {
   const { user } = useAuth();
@@ -20,7 +20,7 @@ const Balance = () => {
   const [activeTab, setActiveTab] = useState('add'); // 'add' or 'withdraw'
   const [amount, setAmount] = useState('100');
   const [withdrawAmount, setWithdrawAmount] = useState('');
-  const [balance, setBalance] = useState(1280000000); // ₹128 Cr
+  const [balance, setBalance] = useState(1280034607.98); // ₹1,28,00,34,607.98
   const [cashBalance, setCashBalance] = useState(0.00);
   const [isProcessing, setIsProcessing] = useState(false);
   const [pendingWithdrawals, setPendingWithdrawals] = useState([]);
@@ -428,7 +428,7 @@ const Balance = () => {
                         <span className="text-white text-xs font-bold">SBI</span>
                       </div>
                       <div>
-                        <p className="text-sm font-medium text-gray-900">STATE BANK OF INDIA</p>
+                        <p className="text-sm font-medium text-gray-900">IDBI Bank</p>
                         <p className="text-xs text-gray-500">....{BANK_ACCOUNT.slice(-4)}</p>
                       </div>
                     </div>
@@ -533,7 +533,7 @@ const Balance = () => {
                         <span className="text-white text-xs font-bold">SBI</span>
                       </div>
                       <div>
-                        <p className="text-sm font-medium text-gray-900">STATE BANK OF INDIA</p>
+                        <p className="text-sm font-medium text-gray-900">IDBI Bank</p>
                         <p className="text-xs text-gray-500">....{BANK_ACCOUNT.slice(-4)}</p>
                       </div>
                     </div>

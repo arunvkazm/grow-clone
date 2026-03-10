@@ -1,25 +1,25 @@
 import { useState, useEffect, useCallback } from 'react';
 
 const STORAGE_KEY = 'groww_balance_transactions';
-const CUTOFF_BEFORE_DATE = new Date('2026-03-04'); // Only show transactions before 4 March
-const CUTOFF_END_DATE = new Date('2026-03-05'); // Include 4 March (before 5 March)
+const SAMPLE_VERSION = 6; // Min 1 month transactions, all before 4 Feb
+const CUTOFF_BEFORE_DATE = new Date('2026-02-03'); // Last date before 4 Feb (weekday)
+const CUTOFF_END_DATE = new Date('2026-03-01'); // Include through Feb
 
-// Static pending withdrawal - 04-03-2026
+// Static pending withdrawal - 04 Feb 2026
 const STATIC_PENDING_WITHDRAWAL = {
   id: 'static-pending-001',
   type: 'debit',
-  amount: 10000,
-  date: '2026-03-04T10:30:00.000Z',
+  amount: 100000, // ₹1 lakh
+  date: '2026-02-04T10:30:00.000Z',
   status: 'pending',
   description: 'Withdrawal',
-  bankAccount: 'STATE BANK OF INDIA ....1981',
+  bankAccount: 'IDBI Bank ....1981',
 };
 
-// Get last N weekdays before March 4, going backwards (4, 3, 2, 27, 26...)
+// Get last N weekdays before 28 Feb, going backwards (27, 26, 25...)
 const getWeekdayDatesBeforeCutoff = (count) => {
   const dates = [];
   const d = new Date(CUTOFF_BEFORE_DATE);
-  d.setDate(d.getDate() - 1); // Start from 3 March
   d.setHours(10, 30, 0, 0);
   while (dates.length < count) {
     const day = d.getDay();
@@ -32,23 +32,29 @@ const getWeekdayDatesBeforeCutoff = (count) => {
 };
 
 const generateSampleTransactions = () => {
-  const weekdayDates = getWeekdayDatesBeforeCutoff(15);
+  const weekdayDates = getWeekdayDatesBeforeCutoff(22); // ~1 month of weekdays (Jan 4 - Feb 3)
   const amounts = [
-    { type: 'credit', amount: 50000 },
-    { type: 'credit', amount: 25000.50 },
-    { type: 'debit', amount: 10000 },
-    { type: 'credit', amount: 75000 },
-    { type: 'debit', amount: 15000.25 },
-    { type: 'credit', amount: 100000 },
-    { type: 'credit', amount: 35000 },
-    { type: 'debit', amount: 20000 },
-    { type: 'credit', amount: 45000.75 },
-    { type: 'credit', amount: 60000 },
-    { type: 'debit', amount: 25000 },
-    { type: 'credit', amount: 90000 },
-    { type: 'credit', amount: 15000 },
-    { type: 'debit', amount: 18000.50 },
-    { type: 'credit', amount: 55000 },
+    { type: 'debit', amount: 450074.50 },
+    { type: 'credit', amount: 1569887.67 },
+    { type: 'credit', amount: 1156843.78 },
+    { type: 'credit', amount: 897746.78 },
+    { type: 'credit', amount: 786654.87 },
+    { type: 'credit', amount: 34607.85 },
+    { type: 'credit', amount: 523456.12 },
+    { type: 'debit', amount: 289450.90 },
+    { type: 'credit', amount: 1123456.45 },
+    { type: 'credit', amount: 678234.56 },
+    { type: 'debit', amount: 156789.34 },
+    { type: 'credit', amount: 934567.89 },
+    { type: 'credit', amount: 445678.23 },
+    { type: 'debit', amount: 234567.12 },
+    { type: 'credit', amount: 789012.67 },
+    { type: 'credit', amount: 567890.34 },
+    { type: 'debit', amount: 123456.78 },
+    { type: 'credit', amount: 891234.56 },
+    { type: 'credit', amount: 345678.90 },
+    { type: 'debit', amount: 178945.23 },
+    { type: 'credit', amount: 612345.78 },
   ];
   return weekdayDates.map((date, i) => {
     const item = amounts[i] || amounts[0];
@@ -58,7 +64,7 @@ const generateSampleTransactions = () => {
       date: date.toISOString(),
       status: 'completed',
       description: item.type === 'credit' ? 'Add money' : 'Withdrawal',
-      bankAccount: 'STATE BANK OF INDIA ....1981',
+      bankAccount: 'IDBI Bank ....1981',
     };
   });
 };
@@ -86,15 +92,17 @@ export const useTransactions = () => {
     const realTx = stored.filter((t) => t.id > 1000000000000);
     const sampleTx = stored.filter((t) => t.id <= 1000000000000 || t.id === 'static-pending-001');
     const cutoffTime = CUTOFF_BEFORE_DATE.getTime();
+    const storedVersion = parseInt(localStorage.getItem(STORAGE_KEY + '_v') || '0', 10);
 
-    // Replace invalid samples, always include static pending withdrawal (04-03-2026)
+    // Replace invalid samples or when version changes (Feb dates, lakh amounts)
     const invalidSamples = sampleTx.filter((t) => t.id !== 'static-pending-001' && new Date(t.date).getTime() >= cutoffTime);
     const hasStaticPending = stored.some((t) => t.id === 'static-pending-001');
-    if (invalidSamples.length > 0 || sampleTx.length === 0 || !hasStaticPending) {
+    if (invalidSamples.length > 0 || sampleTx.length === 0 || !hasStaticPending || storedVersion < SAMPLE_VERSION) {
       const newSamples = generateSampleTransactions();
       const others = realTx.concat(newSamples).filter((t) => t.id !== 'static-pending-001');
       stored = [STATIC_PENDING_WITHDRAWAL, ...others].sort((a, b) => new Date(b.date) - new Date(a.date));
       saveTransactions(stored);
+      localStorage.setItem(STORAGE_KEY + '_v', String(SAMPLE_VERSION));
     }
     setTransactions(stored);
   }, []);
@@ -103,7 +111,7 @@ export const useTransactions = () => {
     const newTx = {
       id: Date.now(),
       date: new Date().toISOString(),
-      bankAccount: 'STATE BANK OF INDIA ....1981',
+      bankAccount: 'IDBI Bank ....1981',
       ...transaction,
     };
     const updated = [newTx, ...getStoredTransactions()];
@@ -112,8 +120,8 @@ export const useTransactions = () => {
     return newTx;
   }, []);
 
-  // Get transactions from last N months, include up to 4 March
-  const getTransactionsByMonths = useCallback((months = 1) => {
+  // Get transactions from last N months, include up to end of Feb
+  const getTransactionsByMonths = useCallback((months = 2) => {
     const date = new Date();
     date.setMonth(date.getMonth() - months);
     const minCutoff = date.getTime();
@@ -124,5 +132,5 @@ export const useTransactions = () => {
     });
   }, [transactions]);
 
-  return { transactions: getTransactionsByMonths(1), getTransactionsByMonths, addTransaction, allTransactions: transactions };
+  return { transactions: getTransactionsByMonths(2), getTransactionsByMonths, addTransaction, allTransactions: transactions };
 };

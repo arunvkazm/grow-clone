@@ -16,6 +16,7 @@ import {
   FiLogOut
 } from 'react-icons/fi';
 import { useAuth } from '../../hooks/useAuth';
+import profileImg from '../../assets/profile.jpeg';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 
@@ -82,10 +83,8 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
           {/* User Info */}
           <div className="p-4 border-b border-gray-800">
             <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 bg-primary-500 rounded-full flex items-center justify-center">
-                <span className="text-white font-semibold">
-                  {user?.name?.charAt(0).toUpperCase() || 'U'}
-                </span>
+              <div className="w-10 h-10 rounded-full overflow-hidden flex-shrink-0">
+                <img src={profileImg} alt="Profile" className="w-full h-full object-cover" />
               </div>
               <div className="flex-1 min-w-0">
                 <p className="text-sm font-medium truncate">{user?.name || 'User'}</p>

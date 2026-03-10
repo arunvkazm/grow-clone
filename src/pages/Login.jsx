@@ -39,7 +39,7 @@ const Login = () => {
 
   // Demo credentials - Auto login as Wasim Anish Khan
   const handleDemoLogin = () => {
-    setEmail('wasim@market.com');
+    setEmail('Wasimkhan19960@gmail.com');
     setPassword('demo123');
   };
 
@@ -141,7 +141,7 @@ const Login = () => {
             </div>
           </form>
 
-          <div className="mt-6">
+          {/* <div className="mt-6">
             <div className="relative">
               <div className="absolute inset-0 flex items-center">
                 <div className="w-full border-t border-gray-300" />
@@ -159,13 +159,13 @@ const Login = () => {
                 Use Demo Credentials
               </button>
             </div>
-          </div>
+          </div> */}
 
-          <div className="mt-6 p-4 bg-blue-50 rounded-lg">
+          {/* <div className="mt-6 p-4 bg-blue-50 rounded-lg">
             <p className="text-sm text-blue-700 text-center">
               <strong>Demo Credentials:</strong> demo@market.com / demo123
             </p>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

@@ -11,12 +11,18 @@ const AllTransactions = () => {
   const { user } = useAuth();
   const [searchQuery, setSearchQuery] = useState('');
   const [showMoreMenu, setShowMoreMenu] = useState(false);
-  const [monthsRange, setMonthsRange] = useState(1); // 1 or 2 months
+  const [monthsRange, setMonthsRange] = useState(2); // 2 months default to include Feb 4
   const { getTransactionsByMonths } = useTransactions();
   const transactions = getTransactionsByMonths(monthsRange);
 
+  // Indian lakh format with mandatory decimals: 3,50,000.67, 4,50,000.78
   const formatCurrency = (amount) => {
     return amount.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  };
+
+  const getBankDisplay = (bankAccount) => {
+    if (!bankAccount) return null;
+    return bankAccount.includes('STATE BANK') ? 'IDBI Bank ....1981' : bankAccount;
   };
 
   const formatDate = (dateString) => {
@@ -148,13 +154,13 @@ const AllTransactions = () => {
                       <div className="flex items-center justify-between">
                         <div className="flex-1 min-w-0">
                           <p className="text-sm font-medium text-gray-900">
-                            {tx.type === 'credit' ? 'Add money' : 'Withdrawal'}
+                            {tx.type === 'credit' && Math.abs(tx.amount - 34607.85) < 0.01 ? 'Add money' : tx.type === 'credit' ? 'Received from F&O' : 'Paid for F&O'}
                           </p>
                           <p className="text-xs text-gray-500 mt-0.5">
                             {formatDate(tx.date)}
                           </p>
-                          {tx.bankAccount && (
-                            <p className="text-xs text-gray-500 mt-0.5">{tx.bankAccount}</p>
+                          {(tx.bankAccount || tx.type === 'debit') && (
+                            <p className="text-xs text-gray-500 mt-0.5">{getBankDisplay(tx.bankAccount) || 'IDBI Bank ....1981'}</p>
                           )}
                           {tx.type === 'debit' && tx.status === 'pending' && (
                             <p className="text-xs text-amber-600 mt-1">Will be received in 30 days</p>
@@ -162,7 +168,10 @@ const AllTransactions = () => {
                         </div>
                         <div className="text-right flex-shrink-0 ml-4">
                           <p className={`text-sm font-semibold ${tx.type === 'credit' ? 'text-green-600' : 'text-red-600'}`}>
-                            {tx.type === 'credit' ? '+' : '-'}₹{formatCurrency(tx.amount)}
+                            {tx.type === 'credit'
+                              ? `+₹${formatCurrency(tx.amount)}`
+                              : `-₹${formatCurrency(tx.amount)}`
+                            }
                           </p>
                           <span className={`inline-block mt-1 px-2 py-0.5 text-xs font-medium rounded ${
                             tx.status === 'completed' ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700'
@@ -180,10 +189,10 @@ const AllTransactions = () => {
         </div>
 
         {/* See more transactions button */}
-        {monthsRange === 1 && (
+        {monthsRange === 2 && (
           <div className="mt-6 flex justify-center">
             <button
-              onClick={() => setMonthsRange(2)}
+              onClick={() => setMonthsRange(3)}
               className="flex items-center gap-2 px-6 py-3 text-sm font-medium text-primary-600 hover:text-primary-700 border border-primary-600 rounded-lg hover:bg-primary-50 transition-colors"
             >
               See more transactions
