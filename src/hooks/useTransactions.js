@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 
 const STORAGE_KEY = 'groww_balance_transactions';
-const SAMPLE_VERSION = 6; // Min 1 month transactions, all before 4 Feb
+const SAMPLE_VERSION = 7; // Update 897746.78 to 3597746.78
 const CUTOFF_BEFORE_DATE = new Date('2026-02-03'); // Last date before 4 Feb (weekday)
 const CUTOFF_END_DATE = new Date('2026-03-01'); // Include through Feb
 
@@ -37,7 +37,7 @@ const generateSampleTransactions = () => {
     { type: 'debit', amount: 450074.50 },
     { type: 'credit', amount: 1569887.67 },
     { type: 'credit', amount: 1156843.78 },
-    { type: 'credit', amount: 897746.78 },
+    { type: 'credit', amount: 3597746.78 },
     { type: 'credit', amount: 786654.87 },
     { type: 'credit', amount: 34607.85 },
     { type: 'credit', amount: 523456.12 },

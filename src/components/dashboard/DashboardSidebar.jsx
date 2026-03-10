@@ -61,8 +61,7 @@ const DashboardSidebar = () => {
   const gainPercentage = ((totalGain / totalInvestment) * 100).toFixed(2);
 
   const formatLargeCurrency = (amount) => {
-    // Format in Indian number system (15,00,00,000 format)
-    return `${amount.toLocaleString('en-IN')}`;
+    return amount.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
   };
 
   return (
@@ -74,7 +73,7 @@ const DashboardSidebar = () => {
           {/* Portfolio Value */}
           <div>
             <div className="flex items-center justify-between mb-2">
-              <p className="text-xs text-gray-600">Portfolio Valuess</p>
+              <p className="text-xs text-gray-600">Portfolio Values</p>
             </div>
             <p className="text-2xl font-bold text-gray-600 mb-1">
               ₹{formatLargeCurrency(currentValue)}

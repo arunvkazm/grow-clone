@@ -9,7 +9,6 @@ import GrowwLogo from '../components/common/GrowwLogo';
 import SecondaryNav from '../components/dashboard/SecondaryNav';
 import Footer from '../components/layout/Footer';
 import { useAuth } from '../hooks/useAuth';
-import { portfolioData } from '../data/portfolio';
 
 const Holdings = () => {
   const { user } = useAuth();
@@ -17,13 +16,14 @@ const Holdings = () => {
   const [showMoreMenu, setShowMoreMenu] = useState(false);
   const [isExpanded, setIsExpanded] = useState(true);
   
-  // Calculate summary values (using first holding as example - Trident)
-  const currentValue = 75.51;
-  const investedValue = 105.90;
-  const oneDayReturns = -1.08;
-  const oneDayReturnsPercent = -1.41;
-  const totalReturns = -30.39;
-  const totalReturnsPercent = -28.70;
+  const holdingsSummary = {
+    currentValue: 10908000 + 19425000 + 70350000 + 26572500 + 65706000,
+    investedValue: 10200000 + 19950000 + 67500000 + 24800000 + 61800000,
+    oneDayReturns: 1104 * 1000 + (-19.40) * 15000 + 51.30 * 50000 + 75.70 * 25000 + 143.70 * 15000,
+  };
+  holdingsSummary.totalReturns = holdingsSummary.currentValue - holdingsSummary.investedValue;
+  holdingsSummary.totalReturnsPercent = (holdingsSummary.totalReturns / holdingsSummary.investedValue) * 100;
+  holdingsSummary.oneDayReturnsPercent = (holdingsSummary.oneDayReturns / holdingsSummary.investedValue) * 100;
 
   return (
     <div className="min-h-screen bg-white">
@@ -101,7 +101,7 @@ const Holdings = () => {
                     onClick={() => setIsExpanded(!isExpanded)}
                     className="flex items-center space-x-2"
                   >
-                    <span className="text-sm font-medium text-gray-900">Holdings (1)</span>
+                    <span className="text-sm font-medium text-gray-900">Holdings (5)</span>
                     {isExpanded ? (
                       <FiChevronUp className="h-4 w-4 text-gray-600" />
                     ) : (
@@ -127,22 +127,22 @@ const Holdings = () => {
                   <div className="grid grid-cols-4 gap-4">
                     <div>
                       <p className="text-xs text-gray-600 mb-1">Current value</p>
-                      <p className="text-sm font-semibold text-gray-900">₹{currentValue.toFixed(2)}</p>
+                      <p className="text-sm font-semibold text-gray-900">₹{holdingsSummary.currentValue.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
                     </div>
                     <div>
                       <p className="text-xs text-gray-600 mb-1">Invested value</p>
-                      <p className="text-sm font-semibold text-gray-900">₹{investedValue.toFixed(2)}</p>
+                      <p className="text-sm font-semibold text-gray-900">₹{holdingsSummary.investedValue.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
                     </div>
                     <div>
                       <p className="text-xs text-gray-600 mb-1">1D returns</p>
-                      <p className="text-sm font-semibold text-red-600">
-                        ₹{oneDayReturns.toFixed(2)} ({oneDayReturnsPercent.toFixed(2)}%)
+                      <p className={`text-sm font-semibold ${holdingsSummary.oneDayReturns >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+                        ₹{holdingsSummary.oneDayReturns.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} ({holdingsSummary.oneDayReturnsPercent >= 0 ? '+' : ''}{holdingsSummary.oneDayReturnsPercent.toFixed(2)}%)
                       </p>
                     </div>
                     <div>
                       <p className="text-xs text-gray-600 mb-1">Total returns</p>
-                      <p className="text-sm font-semibold text-red-600">
-                        ₹{totalReturns.toFixed(2)} ({totalReturnsPercent.toFixed(2)}%)
+                      <p className={`text-sm font-semibold ${holdingsSummary.totalReturns >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+                        ₹{holdingsSummary.totalReturns.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} ({holdingsSummary.totalReturnsPercent >= 0 ? '+' : ''}{holdingsSummary.totalReturnsPercent.toFixed(2)}%)
                       </p>
                     </div>
                   </div>
