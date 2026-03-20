@@ -20,7 +20,13 @@ export default function ReportsPage() {
         "Reports",
         "Change Password",
         "Trading Controls",
-        "Trading APIs"
+        "Trading APIs",
+        "Sell authorization mode",
+        "Trading Details",
+        "Account Related Forms",
+        "Nominee Details",
+        "Active Devices",
+        "Report suspicious activity",
     ];
 
     const taxReports = [
@@ -125,7 +131,6 @@ export default function ReportsPage() {
 
                     {/* MIDDLE (main focus) */}
                     <div className="md:col-span-6 space-y-6">
-
                         <div className="border border-gray-300 rounded-md overflow-hidden">
                             <h3 className="font-semibold border-b border-gray-300 px-4 py-3">
                                 Profit & Loss
@@ -180,63 +185,63 @@ export default function ReportsPage() {
                     </div>
 
                     {/* RIGHT (wider now) */}
-                    <div className="md:col-span-3 border border-gray-300 rounded-md flex flex-col justify-between h-fit">
-                        <div>
-                            <h3 className="font-semibold border-b border-gray-300 px-4 py-3">
-                                {selectedReport}
-                            </h3>
-
-                            <div className="p-4">
-                                <div className="mb-4">
-                                    <label className="block text-sm text-gray-500 mb-1">
-                                        Financial Year
-                                    </label>
-                                    <select className="w-full border border-gray-300 rounded-md p-2">
-                                        <option>Apr 2025 - Mar 2026</option>
-                                        <option>Apr 2024 - Mar 2025</option>
-                                    </select>
-                                </div>
-
-                                <div className="grid grid-cols-2 gap-3">
-                                    <div>
-                                        <label className="text-sm text-gray-500">From</label>
-                                        <div className="flex items-center border border-gray-300 rounded-md px-2 py-2">
-                                            <input
-                                                type="date"
-                                                value={fromDate}
-                                                onChange={(e) => setFromDate(e.target.value)}
-                                                className="w-full outline-none text-sm"
-                                            />
-                                            <FiCalendar size={16} />
-                                        </div>
+                    <div className="md:col-span-3 rounded-md flex flex-col justify-between h-fit">
+                        <div className="border border-gray-300">
+                            <div>
+                                <h3 className="font-semibold border-b border-gray-300 px-4 py-3">
+                                    {selectedReport}
+                                </h3>
+                                <div className="p-4">
+                                    <div className="mb-4">
+                                        <label className="block text-sm text-gray-500 mb-1">
+                                            Financial Year
+                                        </label>
+                                        <select className="w-full border border-gray-300 rounded-md p-2">
+                                            <option>Apr 2025 - Mar 2026</option>
+                                            <option>Apr 2024 - Mar 2025</option>
+                                        </select>
                                     </div>
 
-                                    <div>
-                                        <label className="text-sm text-gray-500">To</label>
-                                        <div className="flex items-center border border-gray-300 rounded-md px-2 py-2">
-                                            <input
-                                                type="date"
-                                                value={toDate}
-                                                onChange={(e) => setToDate(e.target.value)}
-                                                className="w-full outline-none text-sm"
-                                            />
-                                            <FiCalendar size={16} />
+                                    <div className="grid grid-cols-2 gap-3">
+                                        <div>
+                                            <label className="text-sm text-gray-500">From</label>
+                                            <div className="flex items-center border border-gray-300 rounded-md px-2 py-2">
+                                                <input
+                                                    type="date"
+                                                    value={fromDate}
+                                                    onChange={(e) => setFromDate(e.target.value)}
+                                                    className="w-full outline-none text-sm"
+                                                />
+                                                <FiCalendar size={16} />
+                                            </div>
+                                        </div>
+
+                                        <div>
+                                            <label className="text-sm text-gray-500">To</label>
+                                            <div className="flex items-center border border-gray-300 rounded-md px-2 py-2">
+                                                <input
+                                                    type="date"
+                                                    value={toDate}
+                                                    onChange={(e) => setToDate(e.target.value)}
+                                                    className="w-full outline-none text-sm"
+                                                />
+                                                <FiCalendar size={16} />
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
 
-                        <div className="p-4 border-t border-gray-300">
-                            <button className="w-full py-3 text-sm font-medium rounded-md bg-primary-600 text-white hover:bg-primary-700">
-                                View
-                            </button>
-
-                            <button className="w-full mt-4 flex items-center justify-between text-sm text-gray-600 border border-gray-200 py-2 px-3 rounded-md hover:bg-gray-50">
-                                <span>Need help?</span>
-                                <FiChevronRight size={16} />
-                            </button>
+                            <div className="p-4 border-t border-gray-300">
+                                <button className="w-full py-3 text-sm font-medium rounded-md bg-primary-600 text-white hover:bg-primary-700">
+                                    View
+                                </button>
+                            </div>
                         </div>
+                        <button className="w-full mt-4 flex items-center justify-between text-sm text-gray-600 border border-gray-200 py-2 px-3 rounded-md hover:bg-gray-50">
+                            <span>Need help?</span>
+                            <FiChevronRight size={16} />
+                        </button>
                     </div>
 
                 </div>
