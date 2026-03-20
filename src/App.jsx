@@ -25,6 +25,7 @@ import News from './pages/News';
 import IPOs from './pages/IPOs';
 import ProtectedRoute from './components/common/ProtectedRoute';
 import './styles/global.css';
+import ReportsPage from './pages/Reports';
 
 function App() {
   return (
@@ -134,6 +135,11 @@ function App() {
         <Route path="/bank-details" element={
           <ProtectedRoute>
             <BankDetails />
+          </ProtectedRoute>
+        } />
+        <Route path="/reports" element={
+          <ProtectedRoute>
+            <ReportsPage />
           </ProtectedRoute>
         } />
         <Route path="/watchlist" element={

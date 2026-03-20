@@ -7,7 +7,6 @@ import {
   FiFileText, 
   FiHeadphones, 
   FiSun, 
-  FiLogOut,
   FiChevronRight
 } from 'react-icons/fi';
 import { MdAccountBalance } from 'react-icons/md';
