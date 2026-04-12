@@ -18,7 +18,7 @@ const Holdings = () => {
   
   const holdingsSummary = {
     currentValue: 10908000 + 19425000 + 70350000 + 26572500 + 65706000,
-    investedValue: 10200000 + 19950000 + 67500000 + 24800000 + 61800000,
+    investedValue: 214250000,
     oneDayReturns: 1104 * 1000 + (-19.40) * 15000 + 51.30 * 50000 + 75.70 * 25000 + 143.70 * 15000,
   };
   holdingsSummary.totalReturns = holdingsSummary.currentValue - holdingsSummary.investedValue;
