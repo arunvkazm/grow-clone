@@ -2,6 +2,8 @@
 import { useState, useEffect, createContext, useContext } from 'react';
 
 const AuthContext = createContext(null);
+const ALLOWED_EMAIL = 'Wasimkhan19960@gmail.com';
+const ALLOWED_PASSWORD = 'demo123';
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
@@ -17,11 +19,15 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const login = (email, password) => {
-    // Dummy login - in real app, this would be an API call
+    const normalizedEmail = email.trim();
+    if (normalizedEmail !== ALLOWED_EMAIL || password !== ALLOWED_PASSWORD) {
+      return { success: false, message: 'Invalid email or password' };
+    }
+
     const dummyUser = {
       id: 1,
       name: 'Wasim Anish Khan',
-      email: email,
+      email: ALLOWED_EMAIL,
       portfolioValue: 12800000000, // ₹128 Cr
       joinedDate: '2023-01-15'
     };

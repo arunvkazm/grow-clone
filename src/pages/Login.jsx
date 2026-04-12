@@ -26,6 +26,8 @@ const Login = () => {
         if (result.success) {
           toast.success('Login successful!');
           navigate('/explore');
+        } else {
+          toast.error(result.message || 'Invalid credentials');
         }
       } else {
         toast.error('Please fill in all fields');
@@ -35,12 +37,6 @@ const Login = () => {
     } finally {
       setLoading(false);
     }
-  };
-
-  // Demo credentials - Auto login as Wasim Anish Khan
-  const handleDemoLogin = () => {
-    setEmail('Wasimkhan19960@gmail.com');
-    setPassword('demo123');
   };
 
   return (
@@ -140,32 +136,6 @@ const Login = () => {
               </button>
             </div>
           </form>
-
-          {/* <div className="mt-6">
-            <div className="relative">
-              <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-gray-300" />
-              </div>
-              <div className="relative flex justify-center text-sm">
-                <span className="px-2 bg-white text-gray-500">Quick access</span>
-              </div>
-            </div>
-
-            <div className="mt-6">
-              <button
-                onClick={handleDemoLogin}
-                className="w-full flex justify-center py-3 px-4 border border-gray-300 rounded-lg shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
-              >
-                Use Demo Credentials
-              </button>
-            </div>
-          </div> */}
-
-          {/* <div className="mt-6 p-4 bg-blue-50 rounded-lg">
-            <p className="text-sm text-blue-700 text-center">
-              <strong>Demo Credentials:</strong> demo@market.com / demo123
-            </p>
-          </div> */}
         </div>
       </div>
     </div>
