@@ -58,7 +58,7 @@ const AllTransactions = () => {
           <div className="h-16 flex items-center justify-between">
             <div className="flex items-center space-x-6 flex-1">
               <GrowwLogo size="md" showStocks={true} />
-              
+
               <nav className="hidden md:flex items-center space-x-6">
                 <Link to="/stocks" className="text-sm font-medium text-gray-900 border-b-2 border-gray-900 pb-1">
                   Stocks
@@ -104,14 +104,14 @@ const AllTransactions = () => {
                   </button>
                 )}
               </div>
-              
+
               <button className="p-2 text-gray-600 hover:text-gray-900 relative">
                 <FiBell className="h-5 w-5" />
                 <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs font-semibold px-1.5 py-0.5 rounded-full min-w-[20px] text-center">
                   4
                 </span>
               </button>
-              
+
               <ProfileDropdown />
             </div>
           </div>
@@ -163,7 +163,11 @@ const AllTransactions = () => {
                             <p className="text-xs text-gray-500 mt-0.5">{getBankDisplay(tx.bankAccount) || 'IDBI Bank ....1981'}</p>
                           )}
                           {tx.type === 'debit' && tx.status === 'pending' && (
-                            <p className="text-xs text-amber-600 mt-1">Will be received in 30 days</p>
+                            <p className="text-xs text-amber-600 mt-1">
+                              Your account is under re-verification process,
+                              <br />
+                              please try after the verification process is completed.
+                            </p>
                           )}
                         </div>
                         <div className="text-right flex-shrink-0 ml-4">
@@ -173,9 +177,8 @@ const AllTransactions = () => {
                               : `-₹${formatCurrency(tx.amount)}`
                             }
                           </p>
-                          <span className={`inline-block mt-1 px-2 py-0.5 text-xs font-medium rounded ${
-                            tx.status === 'completed' ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700'
-                          }`}>
+                          <span className={`inline-block mt-1 px-2 py-0.5 text-xs font-medium rounded ${tx.status === 'completed' ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700'
+                            }`}>
                             {tx.status === 'completed' ? 'Completed' : 'Pending'}
                           </span>
                         </div>
